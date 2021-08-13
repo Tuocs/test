@@ -15,12 +15,15 @@ func _ready():
 
 
 func _process(delta):
+	
+	#player falls
 	if is_on_floor():
 		velocity.y = 0
 	else:
 		velocity.y += fallSpeed
 	
-	if Input.is_action_just_pressed("ui_up"):
+	#player jumps
+	if Input.is_action_just_pressed("ui_up") && $JumpArea.get_overlapping_bodies().size() > 0:
 		$JumpTimer.start()
 	if Input.is_action_just_released("ui_up"):
 		$JumpTimer.stop()
@@ -28,9 +31,7 @@ func _process(delta):
 	if !$JumpTimer.is_stopped():
 		velocity.y = -jumpSpeed
 	
-	#if Input.is_action_pressed("ui_up") && is_on_floor():
-	#	velocity.y = -jumpSpeed
-	
+	#player goes left right
 	if Input.is_action_pressed("ui_left"):
 		velocity.x = -moveSpeed
 	elif Input.is_action_pressed("ui_right"):
@@ -38,4 +39,5 @@ func _process(delta):
 	else:
 		velocity.x = 0
 	
+	#player position update
 	move_and_slide(velocity, upDir)

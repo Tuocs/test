@@ -1,23 +1,26 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://rigidMove.gd" type="Script" id=2]
 [ext_resource path="res://SceneSwitch.gd" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 32, 31 )
+extents = Vector2( 32, 32 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 32.0567, 138 )
+extents = Vector2( 32, 16 )
 
 [sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 32.0567, 138 )
+
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 7, 35 )
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 3 )
 
 [node name="Player" type="KinematicBody2D" parent="."]
-position = Vector2( 45, 39 )
+position = Vector2( 32, 32 )
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="Player"]
@@ -30,9 +33,19 @@ shape = SubResource( 1 )
 wait_time = 0.15
 one_shot = true
 
+[node name="JumpArea" type="Area2D" parent="Player"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="JumpCollision" type="CollisionShape2D" parent="Player/JumpArea"]
+position = Vector2( 0, 48 )
+shape = SubResource( 2 )
+
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2( 517, 455 )
 scale = Vector2( 17.625, 1 )
+collision_layer = 3
+collision_mask = 3
 
 [node name="Sprite2" type="Sprite" parent="StaticBody2D"]
 position = Vector2( -0.028368, 106.5 )
@@ -41,24 +54,28 @@ texture = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2( -0.0567379, 104 )
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="StaticBody2D3" type="StaticBody2D" parent="."]
 position = Vector2( 1051, 393 )
+collision_layer = 3
+collision_mask = 3
 
 [node name="Sprite" type="Sprite" parent="StaticBody2D3"]
 scale = Vector2( 0.16, 1 )
 texture = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="."]
 position = Vector2( -28, 392 )
+collision_layer = 3
+collision_mask = 3
 
 [node name="Sprite" type="Sprite" parent="StaticBody2D2"]
 scale = Vector2( 0.16, 1 )
 texture = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
-shape = SubResource( 3 )
+shape = SubResource( 4 )
