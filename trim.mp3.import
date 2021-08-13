@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/trim.mp3-ec29ecc74b3aca97fa38f765345332a7.mp3str"
+
+[deps]
+
+source_file="res://trim.mp3"
+dest_files=[ "res://.import/trim.mp3-ec29ecc74b3aca97fa38f765345332a7.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
