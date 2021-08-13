@@ -38,5 +38,5 @@ func TimerTimeout():
 	if (!rotateS1):
 		rotateS1 = true
 		timer.start(3)
-	cam.current = true
+		cam.current = true
 
