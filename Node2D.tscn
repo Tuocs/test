@@ -4,10 +4,10 @@
 [ext_resource path="res://rigidMove.gd" type="Script" id=2]
 [ext_resource path="res://SceneSwitch.gd" type="Script" id=3]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 32, 31 )
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 32.0567, 138 )
 
 [sub_resource type="RectangleShape2D" id=3]
@@ -25,7 +25,7 @@ movespeed = 400
 texture = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-shape = SubResource( 1 )
+shape = SubResource( 4 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2( 517, 455 )
@@ -38,7 +38,7 @@ texture = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2( -0.0567379, 104 )
-shape = SubResource( 2 )
+shape = SubResource( 5 )
 
 [node name="StaticBody2D3" type="StaticBody2D" parent="."]
 position = Vector2( 1051, 393 )
