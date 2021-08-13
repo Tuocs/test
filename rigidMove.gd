@@ -24,6 +24,7 @@ func _process(delta):
 	
 	#player jumps
 	if Input.is_action_just_pressed("ui_up") && $JumpArea.get_overlapping_bodies().size() > 0:
+		move_and_collide(Vector2(0, 64))
 		$JumpTimer.start()
 	if Input.is_action_just_released("ui_up"):
 		$JumpTimer.stop()
