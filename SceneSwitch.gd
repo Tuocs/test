@@ -1,5 +1,6 @@
-extends Node2D
+extends Node
 
+export var path = "res://new scene.tscn"
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -13,5 +14,5 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if Input.is_action_pressed("ui_cancel"):
-		get_tree().change_scene("res://new scene.tscn")
+	if Input.is_action_just_released("ui_cancel"):
+		get_tree().change_scene(path)
