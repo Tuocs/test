@@ -1,14 +1,22 @@
-extends TileMap
+extends StaticBody2D
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+export var length = 1
+
+var sprites = Array()
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	if length > 1:
+		for i in range(length - 1):
+			var s = $Sprite.duplicate()
+			s.position.x += 16 * (i + 1)
+			add_child(s)
+		
+		$CollisionShape2D.shape.extents.x *= length #length is being shared across all instances, for some reason?
+		$CollisionShape2D.position.x += 16 * (length/2)
+		print($CollisionShape2D.shape.extents.x)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

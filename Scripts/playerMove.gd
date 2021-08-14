@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 
 export var moveSpeed = 600
+export var accMult = 60
 export var jumpSpeed = 700
 export var fallSpeed = 50
 
@@ -16,6 +17,10 @@ func _ready():
 
 func _process(delta):
 	
+	player_move()
+
+
+func player_move():
 	#player falls
 	if is_on_floor():
 		velocity.y = 0
@@ -23,11 +28,11 @@ func _process(delta):
 		velocity.y += fallSpeed
 	
 	#player jumps
-	if Input.is_action_just_pressed("ui_up") && $JumpArea.get_overlapping_bodies().size() > 0:
+	if Input.is_action_just_pressed("ui_accept") && $JumpArea.get_overlapping_bodies().size() > 0:
 		move_and_collide(Vector2(0, 64))
 		$JumpTimer.start()
 		
-	if Input.is_action_just_released("ui_up"):
+	if Input.is_action_just_released("ui_accept"):
 		$JumpTimer.stop()
 		
 	if is_on_ceiling():
@@ -38,11 +43,15 @@ func _process(delta):
 	
 	#player goes left right
 	if Input.is_action_pressed("ui_left"):
-		velocity.x = -moveSpeed
+		velocity.x -= accMult
 	elif Input.is_action_pressed("ui_right"):
-		velocity.x = moveSpeed
-	else:
-		velocity.x = 0
+		velocity.x += accMult
+	else: #decelerate when no button pressed
+		velocity.x += -sign(velocity.x) * accMult
+		if abs(velocity.x) < accMult:
+			velocity.x = 0
+	
+	velocity.x = clamp(velocity.x, -moveSpeed, moveSpeed)
 	
 	
 	#player position update
