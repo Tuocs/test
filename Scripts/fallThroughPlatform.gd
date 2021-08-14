@@ -1,4 +1,4 @@
-extends StaticBody2D
+extends TileMap
 
 
 export var length = 1
