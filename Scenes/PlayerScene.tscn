@@ -66,3 +66,6 @@ script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[connection signal="health_updated" from="Player/Health" to="Camera2D/HealthBar" method="_on_Health_health_updated"]
+[connection signal="maxHealth_updated" from="Player/Health" to="Camera2D/HealthBar" method="_on_Health_maxHealth_updated"]
