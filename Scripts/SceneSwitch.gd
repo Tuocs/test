@@ -1,18 +1,25 @@
-extends Button
+extends Node
 
-export var path = "res://new scene.tscn"
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+export var path = "res://Scenes/Menu.tscn"
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+#egg
 func _process(delta):
 	if Input.is_action_just_released("ui_cancel"):
 		get_tree().change_scene(path)
+
+#emmett scene
+func _on_Play_pressed():
+	get_tree().change_scene("res://Scenes/Node2D.tscn")
+
+#scout scene
+func _on_Play_2_pressed():
+	get_tree().change_scene("res://Scenes/Node2D - Copy.tscn")
+
+#settings?
+func _on_Thing_pressed():
+	pass # Replace with function body.
+
+#exit game
+func _on_Exit_pressed():
+	get_tree().quit()
