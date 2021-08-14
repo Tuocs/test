@@ -26,7 +26,11 @@ func _process(delta):
 	if Input.is_action_just_pressed("ui_up") && $JumpArea.get_overlapping_bodies().size() > 0:
 		move_and_collide(Vector2(0, 64))
 		$JumpTimer.start()
+		
 	if Input.is_action_just_released("ui_up"):
+		$JumpTimer.stop()
+		
+	if is_on_ceiling():
 		$JumpTimer.stop()
 	
 	if !$JumpTimer.is_stopped():
@@ -39,6 +43,7 @@ func _process(delta):
 		velocity.x = moveSpeed
 	else:
 		velocity.x = 0
+	
 	
 	#player position update
 	move_and_slide(velocity, upDir)

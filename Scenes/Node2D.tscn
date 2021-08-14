@@ -4,6 +4,7 @@
 [ext_resource path="res://Testing/SceneSwitch.gd" type="Script" id=2]
 [ext_resource path="res://Assets/icon.png" type="Texture" id=3]
 [ext_resource path="res://Assets/StrongholdTileset.tres" type="TileSet" id=4]
+[ext_resource path="res://Scripts/fallThroughPlatform.gd" type="Script" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 32 )
@@ -12,10 +13,7 @@ extents = Vector2( 32, 32 )
 extents = Vector2( 32, 24 )
 
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 32.0567, 138 )
-
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 7, 35 )
+extents = Vector2( 1.8156, 32 )
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 2 )
@@ -37,55 +35,34 @@ texture = ExtResource( 3 )
 shape = SubResource( 1 )
 
 [node name="JumpTimer" type="Timer" parent="Player"]
+process_mode = 0
 wait_time = 0.15
 one_shot = true
 
 [node name="JumpArea" type="Area2D" parent="Player"]
+position = Vector2( 0, 32 )
 collision_layer = 2
 collision_mask = 2
 
 [node name="JumpCollision" type="CollisionShape2D" parent="Player/JumpArea"]
-position = Vector2( 0, 56 )
+position = Vector2( 0, 24 )
 shape = SubResource( 2 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2( 517, 455 )
+position = Vector2( 480, 304 )
 scale = Vector2( 17.625, 1 )
 collision_layer = 3
 collision_mask = 3
+script = ExtResource( 5 )
 
 [node name="Sprite2" type="Sprite" parent="StaticBody2D"]
-position = Vector2( -0.028368, 106.5 )
-scale = Vector2( 0.99734, 4.32812 )
+position = Vector2( 0, 32 )
+scale = Vector2( 0.0567376, 1 )
 texture = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2( -0.0567379, 104 )
+position = Vector2( 0, 32 )
 shape = SubResource( 3 )
-
-[node name="StaticBody2D3" type="StaticBody2D" parent="."]
-position = Vector2( 1051, 393 )
-collision_layer = 3
-collision_mask = 3
-
-[node name="Sprite" type="Sprite" parent="StaticBody2D3"]
-scale = Vector2( 0.16, 1 )
-texture = ExtResource( 3 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
-shape = SubResource( 4 )
-
-[node name="StaticBody2D2" type="StaticBody2D" parent="."]
-position = Vector2( -28, 392 )
-collision_layer = 3
-collision_mask = 3
-
-[node name="Sprite" type="Sprite" parent="StaticBody2D2"]
-scale = Vector2( 0.16, 1 )
-texture = ExtResource( 3 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
-shape = SubResource( 4 )
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 4 )
@@ -93,4 +70,4 @@ cell_size = Vector2( 16, 16 )
 collision_layer = 3
 collision_mask = 3
 format = 1
-tile_data = PoolIntArray( 1245204, 1, 0, 1245205, 1, 65538, 1245206, 1, 2, 1245207, 1, 2, 1245208, 1, 2, 1245209, 1, 3, 1245210, 2, 2, 1245211, 2, 2, 1245212, 2, 2, 1245213, 2, 0, 1245214, 2, 0, 1245215, 2, 2, 1245216, 2, 2, 1245217, 2, 1, 1245218, 1, 0, 1245219, 1, 2, 1245220, 1, 2, 1245221, 1, 65538, 1245222, 1, 65538, 1245223, 1, 3, 1310740, 1, 131072, 1310741, 1, 65537, 1310742, 1, 65537, 1310743, 1, 131073, 1310744, 1, 65537, 1310745, 1, 65539, 1310754, 1, 65536, 1310755, 1, 65537, 1310756, 1, 65537, 1310757, 1, 65537, 1310758, 1, 65537, 1310759, 1, 131075, 1376276, 1, 131072, 1376277, 1, 65537, 1376278, 1, 65537, 1376279, 1, 65537, 1376280, 1, 65537, 1376281, 1, 65539, 1376290, 1, 131072, 1376291, 1, 131073, 1376292, 1, 65537, 1376293, 1, 65537, 1376294, 1, 65537, 1376295, 1, 131075, 1441812, 1, 196608, 1441813, 1, 131074, 1441814, 1, 196610, 1441815, 1, 131074, 1441816, 1, 131074, 1441817, 1, 196611, 1441826, 1, 196608, 1441827, 1, 131074, 1441828, 1, 196610, 1441829, 1, 196610, 1441830, 1, 131074, 1441831, 1, 196611 )
+tile_data = PoolIntArray( 65575, 1, 4, 131111, 1, 65540, 196647, 1, 65540, 262183, 1, 65540, 327719, 1, 65540, 393255, 1, 65540, 458791, 1, 65540, 524327, 1, 65540, 589863, 1, 65540, 655399, 1, 65540, 720935, 1, 65540, 786471, 1, 65540, 852007, 1, 65540, 917543, 1, 65540, 983079, 1, 65540, 1048615, 1, 65540, 1114151, 1, 65540, 1179687, 1, 65540, 1245204, 1, 0, 1245205, 1, 65538, 1245206, 1, 2, 1245207, 1, 2, 1245208, 1, 2, 1245209, 1, 3, 1245210, 2, 2, 1245211, 2, 2, 1245212, 2, 2, 1245213, 2, 0, 1245214, 2, 0, 1245215, 2, 2, 1245216, 2, 2, 1245217, 2, 1, 1245218, 1, 0, 1245219, 1, 2, 1245220, 1, 2, 1245221, 1, 65538, 1245222, 1, 2, 1245223, 1, 393223, 1310740, 1, 131072, 1310741, 1, 65537, 1310742, 1, 65537, 1310743, 1, 131073, 1310744, 1, 65537, 1310745, 1, 65539, 1310754, 1, 65536, 1310755, 1, 65537, 1310756, 1, 65537, 1310757, 1, 65537, 1310758, 1, 65537, 1310759, 1, 131075, 1376276, 1, 131072, 1376277, 1, 65537, 1376278, 1, 65537, 1376279, 1, 65537, 1376280, 1, 65537, 1376281, 1, 65539, 1376290, 1, 131072, 1376291, 1, 131073, 1376292, 1, 65537, 1376293, 1, 65537, 1376294, 1, 65537, 1376295, 1, 131075, 1441812, 1, 196608, 1441813, 1, 131074, 1441814, 1, 196610, 1441815, 1, 131074, 1441816, 1, 131074, 1441817, 1, 196611, 1441826, 1, 196608, 1441827, 1, 131074, 1441828, 1, 196610, 1441829, 1, 196610, 1441830, 1, 131074, 1441831, 1, 262151, 1507367, 1, 65540, 1572874, 1, 0, 1572875, 1, 2, 1572876, 1, 2, 1572877, 1, 3, 1572903, 1, 65540, 1638410, 1, 65536, 1638411, 1, 65537, 1638412, 1, 65537, 1638413, 1, 65539, 1638439, 1, 65540, 1703946, 1, 131072, 1703947, 1, 65537, 1703948, 1, 65537, 1703949, 1, 65539, 1703975, 1, 65540, 1769482, 1, 131072, 1769483, 1, 65537, 1769484, 1, 65537, 1769485, 1, 131075, 1769511, 1, 65540, 1835008, 1, 262144, 1835009, 1, 262145, 1835010, 1, 262145, 1835011, 1, 262145, 1835012, 1, 262145, 1835013, 1, 262145, 1835014, 1, 262145, 1835015, 1, 262145, 1835016, 1, 262145, 1835017, 1, 262145, 1835018, 1, 196615, 1835019, 1, 196610, 1835020, 1, 131074, 1835021, 1, 196613, 1835022, 1, 262145, 1835023, 1, 262145, 1835024, 1, 262145, 1835025, 1, 262145, 1835026, 1, 262145, 1835027, 1, 262145, 1835028, 1, 262145, 1835029, 1, 262145, 1835030, 1, 262145, 1835031, 1, 262145, 1835032, 1, 262145, 1835033, 1, 262145, 1835034, 1, 262145, 1835035, 1, 262145, 1835036, 1, 262145, 1835037, 1, 262145, 1835038, 1, 262145, 1835039, 1, 262145, 1835040, 1, 262145, 1835041, 1, 262145, 1835042, 1, 262145, 1835043, 1, 262145, 1835044, 1, 262145, 1835045, 1, 262145, 1835046, 1, 262145, 1835047, 1, 65542 )
