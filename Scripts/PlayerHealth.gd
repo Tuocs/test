@@ -8,23 +8,17 @@ onready var Health = MaxHealth setget _set_health
 onready var healthbar = get_node("../UI/HealthBar")
 
 
-
-func _ready():
-	healthbar.update_maxhealth(MaxHealth)
-
-
-func _process(delta):
-	
-	if Input.is_action_just_pressed("ui_down"):
-		Dmg(10)
-
-
+#call this whenever player takes damage
 func Dmg(ammount):
 	_set_health(Health - ammount)
 
+
+#do dying stuff here or with signal
 func kill():
 	pass
 
+
+#set new health if health is not what it was send signal
 func _set_health(value):
 	var prv_health = Health
 	Health = clamp(value, 0, MaxHealth)
