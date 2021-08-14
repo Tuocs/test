@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scripts/CamFollowPlayer.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/playerMove.gd" type="Script" id=2]
+[ext_resource path="res://Assets/icon.png" type="Texture" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 8, 8 )
+
+[node name="PlayerScene" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 0.5, 0.5 )
+script = ExtResource( 1 )
+followspeed = 0.125
+
+[node name="Player" type="KinematicBody2D" parent="."]
+script = ExtResource( 2 )
+moveSpeed = 140
+accMult = 20
+jumpSpeed = 225
+fallSpeed = 20
+
+[node name="Sprite" type="Sprite" parent="Player"]
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource( 1 )
+
+[node name="JumpTimer" type="Timer" parent="Player"]
+process_mode = 0
+wait_time = 0.15
+one_shot = true
+
+[node name="JumpCast1" type="RayCast2D" parent="Player"]
+position = Vector2( -8, 8 )
+enabled = true
+cast_to = Vector2( 0, 1 )
+
+[node name="JumpCast2" type="RayCast2D" parent="Player"]
+position = Vector2( 8, 8 )
+enabled = true
+cast_to = Vector2( 0, 1 )
+
+[node name="Bottom" type="Node2D" parent="Player"]
+position = Vector2( 0, 8 )
