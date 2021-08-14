@@ -14,9 +14,12 @@ config/name="test"
 run/main_scene="res://Scenes/Menu.tscn"
 config/icon="res://Assets/icon.png"
 
-[global]
+[display]
 
-scale=false
+window/size/width=1920
+window/size/height=1080
+window/size/resizable=false
+window/size/borderless=true
 
 [input]
 

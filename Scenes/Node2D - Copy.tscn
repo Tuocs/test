@@ -8,73 +8,20 @@
 [ext_resource path="res://Assets/HealthUnder.png" type="Texture" id=6]
 [ext_resource path="res://Assets/HealthFill.png" type="Texture" id=7]
 [ext_resource path="res://Scripts/HealthBar.gd" type="Script" id=8]
+[ext_resource path="res://Scripts/CamFollowPlayer.gd" type="Script" id=9]
 [ext_resource path="res://Scripts/StaticShoot.gd" type="Script" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 32, 32 )
-
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 32, 24 )
-
-[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 32.0567, 138 )
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 7, 35 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 4, 4 )
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 2 )
-
-[node name="Player" type="KinematicBody2D" parent="."]
-position = Vector2( 32, 32 )
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Health" type="Node" parent="Player"]
-script = ExtResource( 4 )
-
-[node name="Sprite" type="Sprite" parent="Player"]
-texture = ExtResource( 3 )
-
-[node name="Camera2D" type="Camera2D" parent="Player"]
-current = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-shape = SubResource( 1 )
-
-[node name="JumpTimer" type="Timer" parent="Player"]
-wait_time = 0.15
-one_shot = true
-
-[node name="JumpArea" type="Area2D" parent="Player"]
-collision_layer = 2
-collision_mask = 2
-
-[node name="JumpCollision" type="CollisionShape2D" parent="Player/JumpArea"]
-position = Vector2( 0, 56 )
-shape = SubResource( 2 )
-
-[node name="UI" type="Control" parent="Player"]
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HealthBar" type="TextureProgress" parent="Player/UI"]
-margin_left = 242.0
-margin_top = 250.0
-margin_right = 296.0
-margin_bottom = 260.0
-rect_scale = Vector2( 5, 5 )
-texture_under = ExtResource( 6 )
-texture_over = ExtResource( 5 )
-texture_progress = ExtResource( 7 )
-tint_progress = Color( 0.729412, 0.0156863, 0.0156863, 1 )
-script = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="World" type="Node2D" parent="."]
 
@@ -91,7 +38,7 @@ texture = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/StaticBody2D"]
 position = Vector2( -0.0567379, 104 )
-shape = SubResource( 3 )
+shape = SubResource( 1 )
 
 [node name="StaticBody2D3" type="StaticBody2D" parent="World"]
 position = Vector2( 730.98, 395.52 )
@@ -104,7 +51,7 @@ texture = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/StaticBody2D3"]
 position = Vector2( 0, 1.68182 )
-shape = SubResource( 4 )
+shape = SubResource( 2 )
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="World"]
 position = Vector2( -28, 392 )
@@ -116,10 +63,63 @@ scale = Vector2( 0.16, 1 )
 texture = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/StaticBody2D2"]
-shape = SubResource( 4 )
+shape = SubResource( 2 )
 
 [node name="Shooter" type="Node2D" parent="World"]
 position = Vector2( 31.4289, 389.494 )
 script = ExtResource( 10 )
 
-[connection signal="health_updated" from="Player/Health" to="Player/UI/HealthBar" method="_on_Health_health_updated"]
+[node name="Player" type="KinematicBody2D" parent="."]
+script = ExtResource( 1 )
+moveSpeed = 480
+accMult = 80
+jumpSpeed = 800
+fallSpeed = 80
+jumpTolerance = 24
+
+[node name="Health" type="Node" parent="Player"]
+script = ExtResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="Player"]
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+scale = Vector2( 8, 8 )
+shape = SubResource( 3 )
+
+[node name="JumpTimer" type="Timer" parent="Player"]
+process_mode = 0
+wait_time = 0.15
+one_shot = true
+
+[node name="JumpCast1" type="RayCast2D" parent="Player"]
+position = Vector2( -32, 32 )
+enabled = true
+cast_to = Vector2( 0, 1 )
+
+[node name="JumpCast2" type="RayCast2D" parent="Player"]
+position = Vector2( 32, 32 )
+enabled = true
+cast_to = Vector2( 0, 1 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+script = ExtResource( 9 )
+followspeed = 0.125
+
+[node name="HealthBar" type="TextureProgress" parent="Camera2D"]
+margin_left = 10.0
+margin_right = 64.0
+margin_bottom = 10.0
+rect_scale = Vector2( 5, 5 )
+texture_under = ExtResource( 6 )
+texture_over = ExtResource( 5 )
+texture_progress = ExtResource( 7 )
+tint_progress = Color( 0.729412, 0.0156863, 0.0156863, 1 )
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="health_updated" from="Player/Health" to="Camera2D/HealthBar" method="_on_Health_health_updated"]
+[connection signal="maxHealth_updated" from="Player/Health" to="Camera2D/HealthBar" method="_on_Health_maxHealth_updated"]

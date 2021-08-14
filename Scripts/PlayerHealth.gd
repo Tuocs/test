@@ -1,11 +1,15 @@
 extends Node
 
+signal maxHealth_updated(MaxHealth)
 signal health_updated(Health)
 signal killed()
 
 export var MaxHealth = 100
 onready var Health = MaxHealth setget _set_health
-onready var healthbar = get_node("../UI/HealthBar")
+
+func _ready():
+	emit_signal("health_updated", Health)
+	emit_signal("maxHealth_updated", MaxHealth)
 
 
 #call this whenever player takes damage
