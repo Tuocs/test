@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Stronghold_Terrain_Tileset.png-297a7f2270de9fe9fbe7c781033b5dab.stex"
+path="res://.import/Stronghold_Terrain_Tileset.png-07b000c9d44f8eac1bb9825445252987.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Stronghold_Terrain_Tileset.png"
-dest_files=[ "res://.import/Stronghold_Terrain_Tileset.png-297a7f2270de9fe9fbe7c781033b5dab.stex" ]
+source_file="res://Assets/Tilesets/Stronghold_Terrain_Tileset.png"
+dest_files=[ "res://.import/Stronghold_Terrain_Tileset.png-07b000c9d44f8eac1bb9825445252987.stex" ]
 
 [params]
 

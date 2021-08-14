@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Grass Tileset.png-72ab5fd52f0ca1cb0a3b210165ab1210.stex"
+path="res://.import/gallet_brick_tiles.png-b871e7246a112ff40d3a11b1d661c82d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Grass Tileset.png"
-dest_files=[ "res://.import/Grass Tileset.png-72ab5fd52f0ca1cb0a3b210165ab1210.stex" ]
+source_file="res://Assets/Tilesets/gallet_brick_tiles.png"
+dest_files=[ "res://.import/gallet_brick_tiles.png-b871e7246a112ff40d3a11b1d661c82d.stex" ]
 
 [params]
 
