@@ -11,4 +11,5 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	position = lerp(position, get_node("../Player").position, followspeed)
+	position.x = lerp(position.x, get_node("../Player").position.x, followspeed)
+	position.y = lerp(position.y, get_node("../Player").position.y, followspeed)

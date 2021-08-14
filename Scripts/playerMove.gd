@@ -16,35 +16,22 @@ func _ready():
 
 
 #bullets will call this on anything they hit that has is
-func hit(ammount):
-	$Health.Dmg(ammount)
+func hit(amount):
+	$Health.Dmg(amount)
 
 
 func _process(delta):
 	
-	player_move()
+	player_move(delta)
 
 
-func player_move():
+func player_move(delta):
 	#player falls
 	if is_on_floor():
 		velocity.y = 0
 	else:
 		velocity.y += fallSpeed
 	
-	#player jumps
-	if Input.is_action_just_pressed("ui_accept") && $JumpArea.get_overlapping_bodies().size() > 0:
-		move_and_collide(Vector2(0, 64))
-		$JumpTimer.start()
-		
-	if Input.is_action_just_released("ui_accept"):
-		$JumpTimer.stop()
-		
-	if is_on_ceiling():
-		$JumpTimer.stop()
-	
-	if !$JumpTimer.is_stopped():
-		velocity.y = -jumpSpeed
 	
 	#player goes left right
 	if Input.is_action_pressed("ui_left"):
@@ -57,6 +44,28 @@ func player_move():
 			velocity.x = 0
 	
 	velocity.x = clamp(velocity.x, -moveSpeed, moveSpeed)
+	
+	
+	#extend jump raycast in the direction of movement
+	$JumpCast1.cast_to.y = velocity.y * delta * 3
+	$JumpCast1.cast_to.y = clamp($JumpCast1.cast_to.y, 12, velocity.y * delta * 3)
+	$JumpCast2.cast_to.y = velocity.y * delta * 3
+	$JumpCast2.cast_to.y = clamp($JumpCast2.cast_to.y, 12, velocity.y * delta * 3)
+	
+	#player jumps
+	if Input.is_action_just_pressed("ui_accept") \
+	 && ($JumpCast1.is_colliding() || $JumpCast2.is_colliding()):
+		move_and_collide(Vector2(0, 64))
+		$JumpTimer.start()
+		
+	if Input.is_action_just_released("ui_accept"):
+		$JumpTimer.stop()
+		
+	if is_on_ceiling():
+		$JumpTimer.stop()
+	
+	if !$JumpTimer.is_stopped():
+		velocity.y = -jumpSpeed
 	
 	
 	#player position update
