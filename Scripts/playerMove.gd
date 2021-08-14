@@ -6,16 +6,19 @@ export var accMult = 60
 export var jumpSpeed = 700
 export var fallSpeed = 50
 
+export var jumpTolerance = 8
+
 const upDir = Vector2(0, -1)
 
 var velocity = Vector2()
 
 
 func _ready():
-	pass
+	$JumpCast1.cast_to.y = jumpTolerance
+	$JumpCast2.cast_to.y = jumpTolerance
 
 
-#bullets will call this on anything they hit that has is
+#bullets will call this on anything they hit that has it
 func hit(amount):
 	$Health.Dmg(amount)
 
@@ -47,15 +50,15 @@ func player_move(delta):
 	
 	
 	#extend jump raycast in the direction of movement
-	$JumpCast1.cast_to.y = velocity.y * delta * 3
-	$JumpCast1.cast_to.y = clamp($JumpCast1.cast_to.y, 12, velocity.y * delta * 3)
-	$JumpCast2.cast_to.y = velocity.y * delta * 3
-	$JumpCast2.cast_to.y = clamp($JumpCast2.cast_to.y, 12, velocity.y * delta * 3)
+	#$JumpCast1.cast_to.y = velocity.y * delta * 3
+	#$JumpCast1.cast_to.y = clamp($JumpCast1.cast_to.y, 6, velocity.y * delta * 3)
+	#$JumpCast2.cast_to.y = velocity.y * delta * 3
+	#$JumpCast2.cast_to.y = clamp($JumpCast2.cast_to.y, 6, velocity.y * delta * 3)
 	
 	#player jumps
 	if Input.is_action_just_pressed("ui_accept") \
 	 && ($JumpCast1.is_colliding() || $JumpCast2.is_colliding()):
-		move_and_collide(Vector2(0, 8))
+		move_and_collide(Vector2(0, jumpTolerance))
 		$JumpTimer.start()
 		
 	if Input.is_action_just_released("ui_accept"):

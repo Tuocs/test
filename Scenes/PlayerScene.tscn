@@ -21,6 +21,7 @@ moveSpeed = 60
 accMult = 10
 jumpSpeed = 100
 fallSpeed = 10
+jumpTolerance = 6
 
 [node name="Sprite" type="Sprite" parent="Player"]
 scale = Vector2( 0.125, 0.125 )
