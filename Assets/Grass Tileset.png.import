@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Bricks Tileset.png-e783edc557bbb260e6feb6a853e81408.stex"
+path="res://.import/Grass Tileset.png-72ab5fd52f0ca1cb0a3b210165ab1210.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Bricks Tileset.png"
-dest_files=[ "res://.import/Bricks Tileset.png-e783edc557bbb260e6feb6a853e81408.stex" ]
+source_file="res://Assets/Grass Tileset.png"
+dest_files=[ "res://.import/Grass Tileset.png-72ab5fd52f0ca1cb0a3b210165ab1210.stex" ]
 
 [params]
 
