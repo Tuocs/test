@@ -4,6 +4,7 @@
 [ext_resource path="res://Scripts/FallThru.gd" type="Script" id=2]
 
 [node name="WoodPlatTiles" type="TileMap"]
+scale = Vector2( 8, 8 )
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 8, 8 )
 format = 1
