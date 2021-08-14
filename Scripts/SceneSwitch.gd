@@ -1,4 +1,4 @@
-extends Node
+extends Button
 
 export var path = "res://new scene.tscn"
 

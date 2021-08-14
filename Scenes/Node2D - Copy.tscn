@@ -10,60 +10,18 @@
 [ext_resource path="res://Scripts/StaticShoot.gd" type="Script" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 32.0567, 138 )
-
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 7, 35 )
-
-[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 32, 32 )
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 32, 24 )
 
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 32.0567, 138 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 7, 35 )
+
 [node name="Node2D" type="Node2D"]
-
-[node name="World" type="Node2D" parent="."]
-
-[node name="StaticBody2D" type="StaticBody2D" parent="World"]
-position = Vector2( 517, 455 )
-scale = Vector2( 17.625, 1 )
-collision_layer = 3
-collision_mask = 3
-
-[node name="Sprite2" type="Sprite" parent="World/StaticBody2D"]
-position = Vector2( -0.028368, 106.5 )
-scale = Vector2( 0.99734, 4.32812 )
-texture = ExtResource( 3 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/StaticBody2D"]
-position = Vector2( -0.0567379, 104 )
-shape = SubResource( 1 )
-
-[node name="StaticBody2D3" type="StaticBody2D" parent="World"]
-position = Vector2( 730.98, 395.52 )
-collision_layer = 3
-collision_mask = 3
-
-[node name="Sprite" type="Sprite" parent="World/StaticBody2D3"]
-scale = Vector2( 0.16, 1 )
-texture = ExtResource( 3 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/StaticBody2D3"]
-position = Vector2( 0, 1.68182 )
-shape = SubResource( 2 )
-
-[node name="StaticBody2D2" type="StaticBody2D" parent="World"]
-position = Vector2( -28, 392 )
-collision_layer = 3
-collision_mask = 3
-
-[node name="Sprite" type="Sprite" parent="World/StaticBody2D2"]
-scale = Vector2( 0.16, 1 )
-texture = ExtResource( 3 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/StaticBody2D2"]
-shape = SubResource( 2 )
 
 [node name="Player" type="KinematicBody2D" parent="."]
 position = Vector2( 32, 32 )
@@ -82,7 +40,7 @@ texture = ExtResource( 3 )
 current = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-shape = SubResource( 3 )
+shape = SubResource( 1 )
 
 [node name="JumpTimer" type="Timer" parent="Player"]
 wait_time = 0.15
@@ -94,7 +52,7 @@ collision_mask = 2
 
 [node name="JumpCollision" type="CollisionShape2D" parent="Player/JumpArea"]
 position = Vector2( 0, 56 )
-shape = SubResource( 4 )
+shape = SubResource( 2 )
 
 [node name="UI" type="Control" parent="Player"]
 __meta__ = {
@@ -116,7 +74,49 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Shooter" type="Node2D" parent="."]
+[node name="World" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="World"]
+position = Vector2( 517, 455 )
+scale = Vector2( 17.625, 1 )
+collision_layer = 3
+collision_mask = 3
+
+[node name="Sprite2" type="Sprite" parent="World/StaticBody2D"]
+position = Vector2( -0.028368, 106.5 )
+scale = Vector2( 0.99734, 4.32812 )
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/StaticBody2D"]
+position = Vector2( -0.0567379, 104 )
+shape = SubResource( 3 )
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="World"]
+position = Vector2( 730.98, 395.52 )
+collision_layer = 3
+collision_mask = 3
+
+[node name="Sprite" type="Sprite" parent="World/StaticBody2D3"]
+scale = Vector2( 0.16, 1 )
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/StaticBody2D3"]
+position = Vector2( 0, 1.68182 )
+shape = SubResource( 4 )
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="World"]
+position = Vector2( -28, 392 )
+collision_layer = 3
+collision_mask = 3
+
+[node name="Sprite" type="Sprite" parent="World/StaticBody2D2"]
+scale = Vector2( 0.16, 1 )
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/StaticBody2D2"]
+shape = SubResource( 4 )
+
+[node name="Shooter" type="Node2D" parent="World"]
 position = Vector2( 31.4289, 389.494 )
 script = ExtResource( 10 )
 
