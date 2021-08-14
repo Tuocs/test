@@ -1,13 +1,13 @@
 [gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scripts/playerMove.gd" type="Script" id=1]
-[ext_resource path="res://Testing/SceneSwitch.gd" type="Script" id=2]
 [ext_resource path="res://Assets/icon.png" type="Texture" id=3]
 [ext_resource path="res://Scripts/PlayerHealth.gd" type="Script" id=4]
 [ext_resource path="res://Assets/HealthOver.png" type="Texture" id=5]
 [ext_resource path="res://Assets/HealthUnder.png" type="Texture" id=6]
 [ext_resource path="res://Assets/HealthFill.png" type="Texture" id=7]
-[ext_resource path="res://Scenes/HealthBar.gd" type="Script" id=8]
+[ext_resource path="res://Scripts/HealthBar.gd" type="Script" id=8]
+[ext_resource path="res://Scripts/StaticShoot.gd" type="Script" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32.0567, 138 )
@@ -22,7 +22,6 @@ extents = Vector2( 32, 32 )
 extents = Vector2( 32, 24 )
 
 [node name="Node2D" type="Node2D"]
-script = ExtResource( 2 )
 
 [node name="World" type="Node2D" parent="."]
 
@@ -42,7 +41,7 @@ position = Vector2( -0.0567379, 104 )
 shape = SubResource( 1 )
 
 [node name="StaticBody2D3" type="StaticBody2D" parent="World"]
-position = Vector2( 1051, 393 )
+position = Vector2( 730.98, 395.52 )
 collision_layer = 3
 collision_mask = 3
 
@@ -115,3 +114,9 @@ script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Shooter" type="Node2D" parent="."]
+position = Vector2( 31.4289, 389.494 )
+script = ExtResource( 10 )
+
+[connection signal="health_updated" from="Player/Health" to="Player/UI/HealthBar" method="_on_Health_health_updated"]

@@ -14,6 +14,11 @@ func _ready():
 	pass
 
 
+#bullets will call this on anything they hit that has is
+func hit(ammount):
+	$Health.Dmg(ammount)
+
+
 func _process(delta):
 	
 	#player falls
