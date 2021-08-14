@@ -10,7 +10,7 @@ func _process(delta):
 
 #emmett scene
 func _on_Play_pressed():
-	get_tree().change_scene("res://Scenes/Node2D.tscn")
+	get_tree().change_scene("res://Scenes/TestLevel.tscn")
 
 #scout scene
 func _on_Play_2_pressed():

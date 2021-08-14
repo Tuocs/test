@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Assets/Tilesets/gallet_wood_plat.tres" type="TileSet" id=1]
+[ext_resource path="res://Scripts/FallThru.gd" type="Script" id=2]
+
+[node name="WoodPlatTiles" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 8, 8 )
+format = 1
+script = ExtResource( 2 )
