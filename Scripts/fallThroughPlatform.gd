@@ -1,4 +1,4 @@
-extends StaticBody2D
+extends TileMap
 
 
 # Declare member variables here. Examples:
@@ -13,7 +13,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if global_position.y < get_node("../Player/JumpArea").global_position.y \
+	if position.y < get_node("../Player/JumpArea").global_position.y \
 	|| Input.is_action_pressed("ui_down"):
 		collision_layer = 0b0
 		collision_mask = 0b0
