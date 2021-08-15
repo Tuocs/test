@@ -5,6 +5,7 @@ export var moveSpeed = 600
 export var accMult = 60
 export var jumpSpeed = 700
 export var fallSpeed = 50
+export var maxYVel = 1000
 
 export var jumpTolerance = 8
 
@@ -26,11 +27,24 @@ func hit(amount):
 func _process(delta):
 	
 	player_move(delta)
+	
+	display_movedir()
+
+
+#display which direction the player is holding
+func display_movedir():
+	var movedir = Vector2(-int(Input.is_action_pressed("ui_left")) + int(Input.is_action_pressed("ui_right")), \
+	int(Input.is_action_pressed("ui_down")) - int(Input.is_action_pressed("ui_up")))
+	
+	$MoveDir.rect_position = lerp($MoveDir.rect_position, movedir * 32 - Vector2(4,4), .2)
 
 
 func player_move(delta):
+	#check if the player is on the floor
+	var on_floor = test_move(global_transform, Vector2(0,1))
+	
 	#player falls
-	if is_on_floor():
+	if on_floor:
 		velocity.y = 0
 	else:
 		velocity.y += fallSpeed
@@ -49,12 +63,6 @@ func player_move(delta):
 	velocity.x = clamp(velocity.x, -moveSpeed, moveSpeed)
 	
 	
-	#extend jump raycast in the direction of movement
-	#$JumpCast1.cast_to.y = velocity.y * delta * 3
-	#$JumpCast1.cast_to.y = clamp($JumpCast1.cast_to.y, 6, velocity.y * delta * 3)
-	#$JumpCast2.cast_to.y = velocity.y * delta * 3
-	#$JumpCast2.cast_to.y = clamp($JumpCast2.cast_to.y, 6, velocity.y * delta * 3)
-	
 	#player jumps
 	if Input.is_action_just_pressed("ui_accept") \
 	&& ($JumpCast1.is_colliding() || $JumpCast2.is_colliding()) \
@@ -70,6 +78,8 @@ func player_move(delta):
 	
 	if !$JumpTimer.is_stopped():
 		velocity.y = -jumpSpeed
+	
+	velocity.y = clamp(velocity.y, -maxYVel, maxYVel)
 	
 	
 	#player position update
