@@ -57,7 +57,8 @@ func player_move(delta):
 	
 	#player jumps
 	if Input.is_action_just_pressed("ui_accept") \
-	 && ($JumpCast1.is_colliding() || $JumpCast2.is_colliding()):
+	&& ($JumpCast1.is_colliding() || $JumpCast2.is_colliding()) \
+	&& !Input.is_action_pressed("ui_down"):
 		move_and_collide(Vector2(0, jumpTolerance))
 		$JumpTimer.start()
 		

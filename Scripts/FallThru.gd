@@ -13,7 +13,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if Input.is_action_pressed("ui_down"):
+	if Input.is_action_pressed("ui_down") && Input.is_action_pressed("ui_accept"):
 		collision_layer = 0b0
 		collision_mask = 0b0
 	else:

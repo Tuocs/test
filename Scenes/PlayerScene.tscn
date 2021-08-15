@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scripts/CamFollowPlayer.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/playerMove.gd" type="Script" id=2]
@@ -8,9 +8,21 @@
 [ext_resource path="res://Assets/HealthOver.png" type="Texture" id=6]
 [ext_resource path="res://Assets/HealthUnder.png" type="Texture" id=7]
 [ext_resource path="res://Scripts/HealthBar.gd" type="Script" id=8]
+[ext_resource path="res://Assets/Player/basic_idle_02.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Player/basic_idle_03.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Player/basic_idle_04.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Player/basic_idle_01.png" type="Texture" id=12]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 4, 4 )
+extents = Vector2( 4, 4.5 )
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 12 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
 
 [node name="PlayerScene" type="Node2D"]
 
@@ -26,9 +38,11 @@ jumpTolerance = 24
 script = ExtResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="Player"]
+visible = false
 texture = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2( 0, -4 )
 scale = Vector2( 8, 8 )
 shape = SubResource( 1 )
 
@@ -46,6 +60,11 @@ cast_to = Vector2( 0, 1 )
 position = Vector2( 32, 32 )
 enabled = true
 cast_to = Vector2( 0, 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Player"]
+position = Vector2( 0, -8 )
+scale = Vector2( 8, 8 )
+frames = SubResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
