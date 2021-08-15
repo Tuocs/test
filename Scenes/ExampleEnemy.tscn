@@ -12,6 +12,7 @@ extents = Vector2( 4, 4 )
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="Enemy"]
+modulate = Color( 1, 0, 0, 1 )
 rotation = 3.14159
 texture = ExtResource( 3 )
 
