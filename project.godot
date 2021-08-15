@@ -21,6 +21,10 @@ window/size/height=1080
 window/size/resizable=false
 window/size/borderless=true
 
+[global]
+
+scale=false
+
 [input]
 
 ui_left={
