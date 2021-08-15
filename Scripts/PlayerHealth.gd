@@ -19,7 +19,7 @@ func Dmg(ammount):
 
 #do dying stuff here or with signal
 func kill():
-	pass
+	get_tree().change_scene("res://Scenes/Menu.tscn")
 
 
 #set new health if health is not what it was send signal
