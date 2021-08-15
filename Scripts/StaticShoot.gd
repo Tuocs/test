@@ -9,7 +9,7 @@ func _process(delta):
 
 #spawn bullet at location
 func shoot():
-	var Bullet = load ("res://Scenes/Bullet.tscn")
+	var Bullet = load ("res://Scenes/Spawnables/Bullet.tscn")
 	var b = Bullet.instance()
 	add_child(b)
 	#b.transform = transform

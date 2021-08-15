@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/PlayerScene.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Rooms/TestLevel.tscn" type="PackedScene" id=2]
+
+[node name="Level" type="Node2D"]
+
+[node name="TestLevel" parent="." instance=ExtResource( 2 )]
+
+[node name="PlayerScene" parent="." instance=ExtResource( 1 )]
+position = Vector2( 160.362, 479.304 )
