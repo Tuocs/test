@@ -10,7 +10,7 @@
 [ext_resource path="res://Scripts/HealthBar.gd" type="Script" id=8]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 4, 4.5 )
+extents = Vector2( 4, 4 )
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
@@ -34,11 +34,9 @@ jumpTolerance = 24
 script = ExtResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="Player"]
-visible = false
 texture = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2( 0, -4 )
 scale = Vector2( 8, 8 )
 shape = SubResource( 1 )
 
