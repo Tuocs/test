@@ -30,16 +30,14 @@ func _physics_process(delta):
 
 func move():
 	velocity.y += GRAVITY
-	var mypos = transform.origin.x
-	var tarpos = target.transform.origin.x
+	velocity.x = 0
 	
-	print (mypos, " ", tarpos)
-
-	if tarpos > mypos:
+	var mypos = global_position.x
+	var tarpos = target.global_position.x
+	
+	if tarpos > mypos+2 :
 		velocity.x = speed
-		print ("right")
-	if tarpos < mypos:
+	if tarpos < mypos-2 :
 		velocity.x = -speed
-		print ("left")
 		
 	velocity = move_and_slide(velocity, UP)
