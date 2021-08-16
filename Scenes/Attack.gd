@@ -1,8 +1,13 @@
 extends Node2D
 
 
-var last_dir_held = Vector2(1, 0)
 export var sword_dmg = 10
+
+var last_dir_held = Vector2(1, 0)
+var dir_held = Vector2(0, 0)
+
+var stage = 0
+onready var player = get_node("..")
 
 
 func _ready():
@@ -14,7 +19,7 @@ func _ready():
 
 func _process(delta):
 	#find the held direction
-	var dir_held = Vector2(0, 0)
+	dir_held = Vector2(0, 0)
 	
 	#if holding oppsite directions, they cancel out
 	if Input.is_action_pressed("ui_up"):
@@ -32,8 +37,23 @@ func _process(delta):
 	elif dir_held.x != 0:
 		last_dir_held.x = dir_held.x
 	
+	#slow down before the swing
+	if Input.is_action_just_pressed("attack") && $AttackTimer.is_stopped() && stage == 0:
+		player.moveSpeed /= 2
+		player.modulate = Color.darkviolet
+		
+		$AttackTimer.start()
+		
+		stage = 1
+
+
+#reset the attack
+func _on_AttackTimer_timeout():
 	#actually swing, if not already swinging
-	if Input.is_action_pressed("attack") && $AttackTimer.is_stopped():
+	if stage == 1:
+		player.moveSpeed *= 4
+		player.modulate = Color.white
+		
 		$Area2D.collision_layer = 32
 		$Area2D.collision_mask = 32
 		
@@ -42,14 +62,22 @@ func _process(delta):
 		$AttackTimer.start()
 		
 		rotation_degrees = rad2deg(dir_held.angle())
-
-
-#reset the attack
-func _on_AttackTimer_timeout():
-	$Area2D.collision_layer = 0b0
-	$Area2D.collision_mask = 0b0
+		
+		stage = 2
+		
+		return
 	
-	$Polygon2D.visible = false
+	#reset the swing
+	if stage == 2:
+		player.moveSpeed /= 2
+		
+		$Area2D.collision_layer = 0b0
+		$Area2D.collision_mask = 0b0
+		
+		$Polygon2D.visible = false
+		
+		stage = 0
+		
 
 
 func _on_Area2D_body_entered(body):
