@@ -8,9 +8,11 @@ const GRAVITY = 50
 const UP = Vector2.UP
 
 func hit(dmg):
-	Health-=dmg
+	Health -= dmg
+	
 	if Health <= 0:
 		Die()
+
 
 func Die():
 	queue_free()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/CamFollowPlayer.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/playerMove.gd" type="Script" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Assets/HealthOver.png" type="Texture" id=6]
 [ext_resource path="res://Assets/HealthUnder.png" type="Texture" id=7]
 [ext_resource path="res://Scripts/HealthBar.gd" type="Script" id=8]
+[ext_resource path="res://Scenes/Attack.gd" type="Script" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 4, 4 )
@@ -59,6 +60,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Weapon" type="Node2D" parent="Player"]
+script = ExtResource( 9 )
+
+[node name="Area2D" type="Area2D" parent="Player/Weapon"]
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player/Weapon/Area2D"]
+polygon = PoolVector2Array( 32, -48, 80, -32, 128, 0, 80, 32, 32, 48 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Player/Weapon"]
+polygon = PoolVector2Array( 32, -48, 80, -32, 128, 0, 80, 32, 32, 48, 32, 44, 80, 28, 122, 0, 80, -28, 32, -44 )
+
+[node name="AttackTimer" type="Timer" parent="Player/Weapon"]
+wait_time = 0.1
+one_shot = true
+
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 script = ExtResource( 1 )
@@ -81,3 +99,5 @@ __meta__ = {
 
 [connection signal="health_updated" from="Player/Health" to="Camera2D/HealthBar" method="_on_Health_health_updated"]
 [connection signal="maxHealth_updated" from="Player/Health" to="Camera2D/HealthBar" method="_on_Health_maxHealth_updated"]
+[connection signal="body_entered" from="Player/Weapon/Area2D" to="Player/Weapon" method="_on_Area2D_body_entered"]
+[connection signal="timeout" from="Player/Weapon/AttackTimer" to="Player/Weapon" method="_on_AttackTimer_timeout"]
