@@ -17,15 +17,14 @@ func _process(delta):
 	var dir_held = Vector2(0, 0)
 	
 	#if holding oppsite directions, they cancel out
-	if Input.is_action_pressed("ui_right"):
-		dir_held.x += 1
-	if Input.is_action_pressed("ui_left"):
-		dir_held.x -= 1
-	#left and right take precedence over up and down
-	if dir_held.x == 0 && Input.is_action_pressed("ui_up"):
+	if Input.is_action_pressed("ui_up"):
 		dir_held.y -= 1
-	if dir_held.x == 0 && Input.is_action_pressed("ui_down"):
+	if Input.is_action_pressed("ui_down"):
 		dir_held.y += 1
+	if dir_held.y == 0 && Input.is_action_pressed("ui_right"):
+		dir_held.x += 1
+	if dir_held.y == 0 && Input.is_action_pressed("ui_left"):
+		dir_held.x -= 1
 	
 	#update the last direction held, or default to it if no direction is held
 	if dir_held.length() == 0:

@@ -62,7 +62,7 @@ __meta__ = {
 
 [node name="Weapon" type="Node2D" parent="Player"]
 script = ExtResource( 9 )
-sword_dmg = 0
+sword_dmg = 5
 
 [node name="Area2D" type="Area2D" parent="Player/Weapon"]
 collision_layer = 32

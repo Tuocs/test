@@ -54,9 +54,9 @@ func player_move(delta):
 	
 	
 	#player goes left right
-	if Input.is_action_pressed("ui_left"):
+	if Input.is_action_pressed("ui_left") && !Input.is_action_pressed("ui_right"):
 		velocity.x -= accMult
-	elif Input.is_action_pressed("ui_right"):
+	elif Input.is_action_pressed("ui_right") && !Input.is_action_pressed("ui_left"):
 		velocity.x += accMult
 	else: #decelerate when no button pressed
 		velocity.x += -sign(velocity.x) * accMult
@@ -90,5 +90,6 @@ func player_move(delta):
 
 
 func _on_Area2D_body_entered(body):
+	#bounce the player on enemies and such when down-hit
 	if "bouncy" in body && Input.is_action_pressed("ui_down"):
 		velocity.y = -jumpSpeed * bounceMultiplier
