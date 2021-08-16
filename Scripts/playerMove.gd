@@ -3,6 +3,7 @@ extends KinematicBody2D
 
 export var moveSpeed = 600
 export var accMult = 60
+var accMultDefault = accMult
 export var jumpSpeed = 700
 export var fallSpeed = 50
 export var maxYVel = 1000
@@ -18,11 +19,14 @@ var velocity = Vector2()
 
 var hurtable = true
 
+var rand = RandomNumberGenerator.new()
+
 
 func _ready():
 	#set up jump assist
 	$JumpCast1.cast_to.y = jumpTolerance
 	$JumpCast2.cast_to.y = jumpTolerance
+	$JumpCast3.cast_to.y = jumpTolerance
 
 
 #bullets will call this on anything they hit that has it
@@ -31,30 +35,41 @@ func hit(amount):
 
 
 func _process(delta):
-	
 	player_move(delta)
 	
 	display_movedir()
 	
 	hit_by_enemies()
 	
+	
 	#player position update
-	velocity = move_and_slide(velocity, upDir)
+	move_and_slide(velocity, upDir)
 
 
 func hit_by_enemies():
+	
+	#if $JumpCast1.is_colliding() && "enemy" in $JumpCast1.get_collider() || \
+	#$JumpCast2.is_colliding() && "enemy" in $JumpCast2.get_collider() || \
+	#$JumpCast3.is_colliding() && "enemy" in $JumpCast3.get_collider():
+	#	move_and_slide(Vector2(0,1))
+	
 	if hurtable:
-		for i in get_slide_count():
-			var body = get_slide_collision(i).collider
+		for body in $Hurtbox.get_overlapping_bodies():
 			
 			#if you hit an enemy, take damage and get flung away
 			if "enemy" in body:
 				hit(body.damage)
 				
-				var pos_diff = global_position - body.global_position
-				velocity = pos_diff.normalized() * hurtSpeed
+				#find the direction to launch the player
+				var pos_diff = (global_position - body.global_position).normalized()
 				
-				#start some invulnerability time after being hit
+				#make them go farther in the x direction, and add x velocity if there is none
+				if pos_diff.x == 0:
+					pos_diff.x = 1
+				
+				velocity = pos_diff * hurtSpeed
+				
+				#start some invulnerability time after being hit, and take away control a little
 				hurtable = false
 				modulate.a = .5
 				$HurtTimer.start()
@@ -96,7 +111,7 @@ func player_move(delta):
 	
 	#player jumps
 	if Input.is_action_just_pressed("ui_accept") \
-	&& ($JumpCast1.is_colliding() || $JumpCast2.is_colliding()) \
+	&& ($JumpCast1.is_colliding() || $JumpCast2.is_colliding() || $JumpCast3.is_colliding()) \
 	&& !Input.is_action_pressed("ui_down"):
 		move_and_collide(Vector2(0, jumpTolerance))
 		$JumpTimer.start()
@@ -122,3 +137,4 @@ func _on_Area2D_body_entered(body):
 func _on_HurtTimer_timeout():
 	modulate.a = 1.0
 	hurtable = true
+
