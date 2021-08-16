@@ -6,6 +6,7 @@ export var accMult = 60
 export var jumpSpeed = 700
 export var fallSpeed = 50
 export var maxYVel = 1000
+export var hurtSpeed = 1000
 
 export var jumpTolerance = 8
 
@@ -14,6 +15,8 @@ export var bounceMultiplier = 1.5
 const upDir = Vector2(0, -1)
 
 var velocity = Vector2()
+
+var hurtable = true
 
 
 func _ready():
@@ -32,6 +35,31 @@ func _process(delta):
 	player_move(delta)
 	
 	display_movedir()
+	
+	hit_by_enemies()
+	
+	#player position update
+	velocity = move_and_slide(velocity, upDir)
+
+
+func hit_by_enemies():
+	if hurtable:
+		for i in get_slide_count():
+			var body = get_slide_collision(i).collider
+			
+			#if you hit an enemy, take damage and get flung away
+			if "enemy" in body:
+				hit(body.damage)
+				
+				var pos_diff = global_position - body.global_position
+				velocity = pos_diff.normalized() * hurtSpeed
+				
+				#start some invulnerability time after being hit
+				hurtable = false
+				modulate.a = .5
+				$HurtTimer.start()
+				
+				return
 
 
 #display which direction the player is holding
@@ -83,13 +111,14 @@ func player_move(delta):
 		velocity.y = -jumpSpeed
 	
 	velocity.y = clamp(velocity.y, -maxYVel, maxYVel)
-	
-	
-	#player position update
-	move_and_slide(velocity, upDir)
 
 
 func _on_Area2D_body_entered(body):
 	#bounce the player on enemies and such when down-hit
 	if "bouncy" in body && Input.is_action_pressed("ui_down"):
 		velocity.y = -jumpSpeed * bounceMultiplier
+
+
+func _on_HurtTimer_timeout():
+	modulate.a = 1.0
+	hurtable = true

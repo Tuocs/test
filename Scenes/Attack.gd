@@ -38,22 +38,7 @@ func _process(delta):
 		last_dir_held.x = dir_held.x
 	
 	#slow down before the swing
-	if Input.is_action_just_pressed("attack") && $AttackTimer.is_stopped() && stage == 0:
-		player.moveSpeed /= 2
-		player.modulate = Color.darkviolet
-		
-		$AttackTimer.start()
-		
-		stage = 1
-
-
-#reset the attack
-func _on_AttackTimer_timeout():
-	#actually swing, if not already swinging
-	if stage == 1:
-		player.moveSpeed *= 4
-		player.modulate = Color.white
-		
+	if Input.is_action_just_pressed("attack") && $AttackTimer.is_stopped():
 		$Area2D.collision_layer = 32
 		$Area2D.collision_mask = 32
 		
@@ -62,22 +47,14 @@ func _on_AttackTimer_timeout():
 		$AttackTimer.start()
 		
 		rotation_degrees = rad2deg(dir_held.angle())
-		
-		stage = 2
-		
-		return
+
+
+#reset the attack
+func _on_AttackTimer_timeout():
+	$Area2D.collision_layer = 0b0
+	$Area2D.collision_mask = 0b0
 	
-	#reset the swing
-	if stage == 2:
-		player.moveSpeed /= 2
-		
-		$Area2D.collision_layer = 0b0
-		$Area2D.collision_mask = 0b0
-		
-		$Polygon2D.visible = false
-		
-		stage = 0
-		
+	$Polygon2D.visible = false
 
 
 func _on_Area2D_body_entered(body):

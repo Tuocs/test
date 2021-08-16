@@ -3,11 +3,13 @@ extends KinematicBody2D
 var velocity = Vector2()
 var Health = 20
 var speed = 100
+var damage = 10
 
 const GRAVITY = 50
 const UP = Vector2.UP
 
 const bouncy = true
+const enemy = true
 
 func hit(dmg):
 	Health -= dmg

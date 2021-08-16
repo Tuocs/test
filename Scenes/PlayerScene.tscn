@@ -21,7 +21,8 @@ moveSpeed = 480
 accMult = 50
 jumpSpeed = 800
 fallSpeed = 80
-maxYVel = 1500
+maxYVel = 2000
+hurtSpeed = 1200
 jumpTolerance = 24
 
 [node name="Health" type="Node" parent="Player"]
@@ -38,6 +39,10 @@ shape = SubResource( 1 )
 [node name="JumpTimer" type="Timer" parent="Player"]
 process_mode = 0
 wait_time = 0.15
+one_shot = true
+
+[node name="HurtTimer" type="Timer" parent="Player"]
+wait_time = 0.25
 one_shot = true
 
 [node name="JumpCast1" type="RayCast2D" parent="Player"]
@@ -102,6 +107,7 @@ __meta__ = {
 
 [connection signal="health_updated" from="Player/Health" to="Camera2D/HealthBar" method="_on_Health_health_updated"]
 [connection signal="maxHealth_updated" from="Player/Health" to="Camera2D/HealthBar" method="_on_Health_maxHealth_updated"]
+[connection signal="timeout" from="Player/HurtTimer" to="Player" method="_on_HurtTimer_timeout"]
 [connection signal="body_entered" from="Player/Weapon/Area2D" to="Player/Weapon" method="_on_Area2D_body_entered"]
 [connection signal="body_entered" from="Player/Weapon/Area2D" to="Player" method="_on_Area2D_body_entered"]
 [connection signal="timeout" from="Player/Weapon/AttackTimer" to="Player/Weapon" method="_on_AttackTimer_timeout"]
