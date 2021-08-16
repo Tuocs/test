@@ -11,6 +11,8 @@ const UP = Vector2.UP
 const bouncy = true
 const enemy = true
 
+onready var target = get_node("../../PlayerScene/Player")
+
 func hit(dmg):
 	Health -= dmg
 	
@@ -28,6 +30,16 @@ func _physics_process(delta):
 
 func move():
 	velocity.y += GRAVITY
-	velocity.x = -speed
+	var mypos = transform.origin.x
+	var tarpos = target.transform.origin.x
 	
+	print (mypos, " ", tarpos)
+
+	if tarpos > mypos:
+		velocity.x = speed
+		print ("right")
+	if tarpos < mypos:
+		velocity.x = -speed
+		print ("left")
+		
 	velocity = move_and_slide(velocity, UP)

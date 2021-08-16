@@ -8,7 +8,7 @@
 [ext_resource path="res://Assets/HealthOver.png" type="Texture" id=6]
 [ext_resource path="res://Assets/HealthUnder.png" type="Texture" id=7]
 [ext_resource path="res://Scripts/HealthBar.gd" type="Script" id=8]
-[ext_resource path="res://Scenes/Attack.gd" type="Script" id=9]
+[ext_resource path="res://Scripts/Attack.gd" type="Script" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 4, 4 )
