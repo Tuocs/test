@@ -62,6 +62,7 @@ __meta__ = {
 
 [node name="Weapon" type="Node2D" parent="Player"]
 script = ExtResource( 9 )
+sword_dmg = 0
 
 [node name="Area2D" type="Area2D" parent="Player/Weapon"]
 collision_layer = 32
@@ -83,10 +84,10 @@ script = ExtResource( 1 )
 followspeed = 0.125
 
 [node name="HealthBar" type="TextureProgress" parent="Camera2D"]
-margin_left = 632.0
-margin_top = 352.0
-margin_right = 686.0
-margin_bottom = 362.0
+margin_left = 364.0
+margin_top = 304.0
+margin_right = 418.0
+margin_bottom = 314.0
 rect_scale = Vector2( 5, 5 )
 texture_under = ExtResource( 7 )
 texture_over = ExtResource( 6 )
@@ -100,4 +101,5 @@ __meta__ = {
 [connection signal="health_updated" from="Player/Health" to="Camera2D/HealthBar" method="_on_Health_health_updated"]
 [connection signal="maxHealth_updated" from="Player/Health" to="Camera2D/HealthBar" method="_on_Health_maxHealth_updated"]
 [connection signal="body_entered" from="Player/Weapon/Area2D" to="Player/Weapon" method="_on_Area2D_body_entered"]
+[connection signal="body_entered" from="Player/Weapon/Area2D" to="Player" method="_on_Area2D_body_entered"]
 [connection signal="timeout" from="Player/Weapon/AttackTimer" to="Player/Weapon" method="_on_AttackTimer_timeout"]

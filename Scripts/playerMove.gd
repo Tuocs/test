@@ -9,12 +9,15 @@ export var maxYVel = 1000
 
 export var jumpTolerance = 8
 
+export var bounceMultiplier = 1.5
+
 const upDir = Vector2(0, -1)
 
 var velocity = Vector2()
 
 
 func _ready():
+	#set up jump assist
 	$JumpCast1.cast_to.y = jumpTolerance
 	$JumpCast2.cast_to.y = jumpTolerance
 
@@ -84,3 +87,8 @@ func player_move(delta):
 	
 	#player position update
 	move_and_slide(velocity, upDir)
+
+
+func _on_Area2D_body_entered(body):
+	if "bouncy" in body && Input.is_action_pressed("ui_down"):
+		velocity.y = -jumpSpeed * bounceMultiplier

@@ -7,6 +7,8 @@ var speed = 100
 const GRAVITY = 50
 const UP = Vector2.UP
 
+const bouncy = true
+
 func hit(dmg):
 	Health -= dmg
 	

@@ -54,5 +54,6 @@ func _on_AttackTimer_timeout():
 
 
 func _on_Area2D_body_entered(body):
+	#reduce the health of enemies on hit
 	if body.has_method("hit"):
 		body.hit(sword_dmg)

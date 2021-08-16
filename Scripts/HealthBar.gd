@@ -3,8 +3,7 @@ extends TextureProgress
 
 
 func _ready():
-	rect_position = get_node("/root").size / 2 - \
-	rect_size * rect_scale
+	pass
 
 
 func _process(delta):
