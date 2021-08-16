@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/CamFollowPlayer.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/playerMove.gd" type="Script" id=2]
@@ -8,17 +8,19 @@
 [ext_resource path="res://Assets/HealthOver.png" type="Texture" id=6]
 [ext_resource path="res://Assets/HealthUnder.png" type="Texture" id=7]
 [ext_resource path="res://Scripts/HealthBar.gd" type="Script" id=8]
-[ext_resource path="res://Scripts/Attack.gd" type="Script" id=9]
+[ext_resource path="res://Scenes/Attack.gd" type="Script" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 4, 4 )
+
+[sub_resource type="AudioStreamRandomPitch" id=2]
 
 [node name="PlayerScene" type="Node2D"]
 
 [node name="Player" type="KinematicBody2D" parent="."]
 script = ExtResource( 2 )
 moveSpeed = 480
-accMult = 50
+accMult = 40
 jumpSpeed = 800
 fallSpeed = 80
 maxYVel = 2000
@@ -64,6 +66,9 @@ color = Color( 1, 0, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Player"]
+stream = SubResource( 2 )
 
 [node name="Weapon" type="Node2D" parent="Player"]
 script = ExtResource( 9 )
