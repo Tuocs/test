@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scripts/CamFollowPlayer.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/playerMove.gd" type="Script" id=2]
@@ -10,61 +10,11 @@
 [ext_resource path="res://Scripts/HealthBar.gd" type="Script" id=8]
 [ext_resource path="res://Scripts/Attack.gd" type="Script" id=9]
 [ext_resource path="res://Assets/SoundEffects/PlayerSwing.wav" type="AudioStream" id=10]
-[ext_resource path="res://Assets/Player/player_idle_v2.png" type="Texture" id=11]
 [ext_resource path="res://Assets/SoundEffects/PlayerJump.wav" type="AudioStream" id=12]
 [ext_resource path="res://Assets/SoundEffects/PlayerHurt.wav" type="AudioStream" id=13]
 
-[sub_resource type="AtlasTexture" id=1]
-atlas = ExtResource( 11 )
-region = Rect2( 0, 0, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 11 )
-region = Rect2( 16, 0, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 11 )
-region = Rect2( 32, 0, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=4]
-atlas = ExtResource( 11 )
-region = Rect2( 48, 0, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 11 )
-region = Rect2( 64, 0, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 11 )
-region = Rect2( 80, 0, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=7]
-atlas = ExtResource( 11 )
-region = Rect2( 96, 0, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=8]
-atlas = ExtResource( 11 )
-region = Rect2( 112, 0, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=9]
-atlas = ExtResource( 11 )
-region = Rect2( 128, 0, 16, 16 )
-
-[sub_resource type="SpriteFrames" id=10]
-animations = [ {
-"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
-"loop": true,
-"name": "idle",
-"speed": 10.0
-}, {
-"frames": [  ],
-"loop": true,
-"name": "walk",
-"speed": 13.0
-} ]
-
 [sub_resource type="RectangleShape2D" id=11]
-extents = Vector2( 4, 7.5 )
+extents = Vector2( 36, 36 )
 
 [sub_resource type="AudioStreamRandomPitch" id=12]
 audio_stream = ExtResource( 10 )
@@ -100,9 +50,6 @@ texture = ExtResource( 3 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Player"]
 scale = Vector2( 8, 8 )
-frames = SubResource( 10 )
-animation = "idle"
-frame = 7
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
@@ -200,6 +147,6 @@ __meta__ = {
 [connection signal="health_updated" from="Player/Health" to="Camera2D/HealthBar" method="_on_Health_health_updated"]
 [connection signal="maxHealth_updated" from="Player/Health" to="Camera2D/HealthBar" method="_on_Health_maxHealth_updated"]
 [connection signal="timeout" from="Player/HurtTimer" to="Player" method="_on_HurtTimer_timeout"]
-[connection signal="body_entered" from="Player/Weapon/Area2D" to="Player/Weapon" method="_on_Area2D_body_entered"]
 [connection signal="body_entered" from="Player/Weapon/Area2D" to="Player" method="_on_Area2D_body_entered"]
+[connection signal="body_entered" from="Player/Weapon/Area2D" to="Player/Weapon" method="_on_Area2D_body_entered"]
 [connection signal="timeout" from="Player/Weapon/AttackTimer" to="Player/Weapon" method="_on_AttackTimer_timeout"]
