@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scripts/CamFollowPlayer.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/playerMove.gd" type="Script" id=2]
@@ -9,49 +9,18 @@
 [ext_resource path="res://Assets/HealthUnder.png" type="Texture" id=7]
 [ext_resource path="res://Scripts/HealthBar.gd" type="Script" id=8]
 [ext_resource path="res://Scripts/Attack.gd" type="Script" id=9]
-[ext_resource path="res://Assets/Player/player_stand.png" type="Texture" id=10]
-[ext_resource path="res://Assets/Player/player_run.png" type="Texture" id=11]
-
-[sub_resource type="AtlasTexture" id=1]
-atlas = ExtResource( 11 )
-region = Rect2( 0, 0, 8, 8 )
-
-[sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 11 )
-region = Rect2( 0, 8, 8, 8 )
-
-[sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 11 )
-region = Rect2( 0, 16, 8, 8 )
-
-[sub_resource type="AtlasTexture" id=4]
-atlas = ExtResource( 11 )
-region = Rect2( 0, 24, 8, 8 )
-
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 11 )
-region = Rect2( 0, 32, 8, 8 )
-
-[sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 11 )
-region = Rect2( 0, 40, 8, 8 )
-
-[sub_resource type="AtlasTexture" id=7]
-atlas = ExtResource( 11 )
-region = Rect2( 0, 48, 8, 8 )
-
-[sub_resource type="AtlasTexture" id=8]
-atlas = ExtResource( 11 )
-region = Rect2( 0, 56, 8, 8 )
+[ext_resource path="res://Assets/SoundEffects/PlayerSwing.wav" type="AudioStream" id=10]
+[ext_resource path="res://Assets/SoundEffects/PlayerJump.wav" type="AudioStream" id=12]
+[ext_resource path="res://Assets/SoundEffects/PlayerHurt.wav" type="AudioStream" id=13]
 
 [sub_resource type="SpriteFrames" id=9]
 animations = [ {
-"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
+"frames": [  ],
 "loop": true,
 "name": "walk",
 "speed": 13.0
 }, {
-"frames": [ ExtResource( 10 ) ],
+"frames": [  ],
 "loop": true,
 "name": "stand",
 "speed": 5.0
@@ -59,6 +28,10 @@ animations = [ {
 
 [sub_resource type="RectangleShape2D" id=10]
 extents = Vector2( 4, 4 )
+
+[sub_resource type="AudioStreamRandomPitch" id=12]
+audio_stream = ExtResource( 10 )
+random_pitch = 1.5
 
 [sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 36, 36 )
@@ -74,16 +47,21 @@ fallSpeed = 80
 maxYVel = 2000
 hurtSpeed = 1200
 jumpTolerance = 24
+jumpSound = ExtResource( 12 )
+hurtSound = ExtResource( 13 )
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="Player"]
+stream = ExtResource( 12 )
 
 [node name="Health" type="Node" parent="Player"]
 script = ExtResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="Player"]
-visible = false
 scale = Vector2( 8, 8 )
 texture = ExtResource( 3 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Player"]
+visible = false
 scale = Vector2( 8, 8 )
 frames = SubResource( 9 )
 animation = "stand"
@@ -144,6 +122,9 @@ polygon = PoolVector2Array( 32, -48, 80, -32, 128, 0, 80, 32, 32, 48, 32, 44, 80
 [node name="AttackTimer" type="Timer" parent="Player/Weapon"]
 wait_time = 0.15
 one_shot = true
+
+[node name="AttackSoundPlayer" type="AudioStreamPlayer2D" parent="Player/Weapon"]
+stream = SubResource( 12 )
 
 [node name="Hurtbox" type="Area2D" parent="Player"]
 collision_layer = 32

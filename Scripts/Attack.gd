@@ -37,7 +37,6 @@ func _process(delta):
 	elif dir_held.x != 0:
 		last_dir_held.x = dir_held.x
 	
-	#slow down before the swing
 	if Input.is_action_just_pressed("attack") && $AttackTimer.is_stopped():
 		$Area2D.collision_layer = 32
 		$Area2D.collision_mask = 32
@@ -47,9 +46,11 @@ func _process(delta):
 		$AttackTimer.start()
 		
 		rotation_degrees = rad2deg(dir_held.angle())
+		
+		#play the swing sound
+		$AttackSoundPlayer.play()
 
 
-#reset the attack
 func _on_AttackTimer_timeout():
 	$Area2D.collision_layer = 0b0
 	$Area2D.collision_mask = 0b0

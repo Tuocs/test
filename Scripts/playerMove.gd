@@ -3,7 +3,6 @@ extends KinematicBody2D
 
 export var moveSpeed = 600
 export var accMult = 60
-var accMultDefault = accMult
 export var jumpSpeed = 700
 export var fallSpeed = 50
 export var maxYVel = 1000
@@ -12,6 +11,9 @@ export var hurtSpeed = 1000
 export var jumpTolerance = 8
 
 export var bounceMultiplier = 1.5
+
+export(AudioStream) var jumpSound
+export(AudioStream) var hurtSound
 
 const upDir = Vector2(0, -1)
 
@@ -32,6 +34,9 @@ func _ready():
 #bullets will call this on anything they hit that has it
 func hit(amount):
 	$Health.Dmg(amount)
+	
+	$SoundPlayer.stream = hurtSound
+	$SoundPlayer.play()
 
 
 func _process(delta):
@@ -40,7 +45,6 @@ func _process(delta):
 	display_movedir()
 	
 	hit_by_enemies()
-	
 	
 	#player position update
 	velocity = move_and_slide(velocity, upDir)
@@ -110,9 +114,13 @@ func player_move(delta):
 		move_and_collide(Vector2(0, jumpTolerance))
 		$JumpTimer.start()
 		
+		#play the jump sound
+		$SoundPlayer.stream = jumpSound
+		$SoundPlayer.play()
+	
 	if Input.is_action_just_released("ui_accept"):
 		$JumpTimer.stop()
-		
+	
 	if is_on_ceiling():
 		$JumpTimer.stop()
 	
