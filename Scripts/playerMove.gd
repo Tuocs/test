@@ -47,12 +47,6 @@ func _process(delta):
 
 
 func hit_by_enemies():
-	
-	#if $JumpCast1.is_colliding() && "enemy" in $JumpCast1.get_collider() || \
-	#$JumpCast2.is_colliding() && "enemy" in $JumpCast2.get_collider() || \
-	#$JumpCast3.is_colliding() && "enemy" in $JumpCast3.get_collider():
-	#	move_and_slide(Vector2(0,1))
-	
 	if hurtable:
 		for body in $Hurtbox.get_overlapping_bodies():
 			

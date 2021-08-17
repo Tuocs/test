@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Scripts/CamFollowPlayer.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/playerMove.gd" type="Script" id=2]
@@ -9,13 +9,58 @@
 [ext_resource path="res://Assets/HealthUnder.png" type="Texture" id=7]
 [ext_resource path="res://Scripts/HealthBar.gd" type="Script" id=8]
 [ext_resource path="res://Scripts/Attack.gd" type="Script" id=9]
+[ext_resource path="res://Assets/Player/player_stand.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Player/player_run.png" type="Texture" id=11]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 11 )
+region = Rect2( 0, 0, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 11 )
+region = Rect2( 0, 8, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 11 )
+region = Rect2( 0, 16, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 11 )
+region = Rect2( 0, 24, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 11 )
+region = Rect2( 0, 32, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 11 )
+region = Rect2( 0, 40, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 11 )
+region = Rect2( 0, 48, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 11 )
+region = Rect2( 0, 56, 8, 8 )
+
+[sub_resource type="SpriteFrames" id=9]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
+"loop": true,
+"name": "walk",
+"speed": 13.0
+}, {
+"frames": [ ExtResource( 10 ) ],
+"loop": true,
+"name": "stand",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=10]
 extents = Vector2( 4, 4 )
 
-[sub_resource type="AudioStreamRandomPitch" id=2]
-
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 36, 36 )
 
 [node name="PlayerScene" type="Node2D"]
@@ -34,12 +79,19 @@ jumpTolerance = 24
 script = ExtResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="Player"]
+visible = false
 scale = Vector2( 8, 8 )
 texture = ExtResource( 3 )
 
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Player"]
+scale = Vector2( 8, 8 )
+frames = SubResource( 9 )
+animation = "stand"
+playing = true
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 scale = Vector2( 8, 8 )
-shape = SubResource( 1 )
+shape = SubResource( 10 )
 
 [node name="JumpTimer" type="Timer" parent="Player"]
 process_mode = 0
@@ -75,9 +127,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Player"]
-stream = SubResource( 2 )
-
 [node name="Weapon" type="Node2D" parent="Player"]
 script = ExtResource( 9 )
 sword_dmg = 5
@@ -101,7 +150,7 @@ collision_layer = 32
 collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Hurtbox"]
-shape = SubResource( 3 )
+shape = SubResource( 11 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
