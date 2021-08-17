@@ -43,7 +43,7 @@ func _process(delta):
 	
 	
 	#player position update
-	move_and_slide(velocity, upDir)
+	velocity = move_and_slide(velocity, upDir)
 
 
 func hit_by_enemies():
