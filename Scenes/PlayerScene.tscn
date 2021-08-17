@@ -59,7 +59,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=11]
-extents = Vector2( 36, 36 )
+extents = Vector2( 4, 7.5 )
 
 [sub_resource type="AudioStreamRandomPitch" id=12]
 audio_stream = ExtResource( 10 )
@@ -96,7 +96,7 @@ texture = ExtResource( 3 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Player"]
 scale = Vector2( 8, 8 )
 frames = SubResource( 10 )
-frame = 3
+frame = 8
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
