@@ -77,10 +77,17 @@ func hit_by_enemies():
 
 #display which direction the player is holding
 func display_movedir():
+	#red dot
 	var movedir = Vector2(-int(Input.is_action_pressed("ui_left")) + int(Input.is_action_pressed("ui_right")), \
 	int(Input.is_action_pressed("ui_down")) - int(Input.is_action_pressed("ui_up")))
 	
 	$MoveDir.rect_position = lerp($MoveDir.rect_position, movedir * 32 - Vector2(4,4), .2)
+	
+	#change sprite orientation
+	if velocity.x > 0:
+		$AnimatedSprite.flip_h = 0
+	elif velocity.x < 0:
+		$AnimatedSprite.flip_h = 1
 
 
 func player_move(delta):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Scripts/CamFollowPlayer.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/playerMove.gd" type="Script" id=2]
@@ -10,31 +10,68 @@
 [ext_resource path="res://Scripts/HealthBar.gd" type="Script" id=8]
 [ext_resource path="res://Scripts/Attack.gd" type="Script" id=9]
 [ext_resource path="res://Assets/SoundEffects/PlayerSwing.wav" type="AudioStream" id=10]
+[ext_resource path="res://Assets/Player/player_idle.png" type="Texture" id=11]
 [ext_resource path="res://Assets/SoundEffects/PlayerJump.wav" type="AudioStream" id=12]
 [ext_resource path="res://Assets/SoundEffects/PlayerHurt.wav" type="AudioStream" id=13]
 
-[sub_resource type="SpriteFrames" id=9]
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 11 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 11 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 11 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 11 )
+region = Rect2( 48, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 11 )
+region = Rect2( 64, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 11 )
+region = Rect2( 80, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 11 )
+region = Rect2( 96, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 11 )
+region = Rect2( 112, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 11 )
+region = Rect2( 128, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=10]
 animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
+"loop": true,
+"name": "idle",
+"speed": 10.0
+}, {
 "frames": [  ],
 "loop": true,
 "name": "walk",
 "speed": 13.0
-}, {
-"frames": [  ],
-"loop": true,
-"name": "stand",
-"speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=10]
-extents = Vector2( 4, 4 )
+[sub_resource type="RectangleShape2D" id=11]
+extents = Vector2( 4, 7.5 )
 
 [sub_resource type="AudioStreamRandomPitch" id=12]
 audio_stream = ExtResource( 10 )
 random_pitch = 1.5
 
-[sub_resource type="RectangleShape2D" id=11]
-extents = Vector2( 36, 36 )
+[sub_resource type="RectangleShape2D" id=13]
+extents = Vector2( 34, 62 )
 
 [node name="PlayerScene" type="Node2D"]
 
@@ -57,19 +94,20 @@ stream = ExtResource( 12 )
 script = ExtResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="Player"]
+visible = false
 scale = Vector2( 8, 8 )
 texture = ExtResource( 3 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Player"]
-visible = false
 scale = Vector2( 8, 8 )
-frames = SubResource( 9 )
-animation = "stand"
+frames = SubResource( 10 )
+animation = "idle"
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2( 0, 4 )
 scale = Vector2( 8, 8 )
-shape = SubResource( 10 )
+shape = SubResource( 11 )
 
 [node name="JumpTimer" type="Timer" parent="Player"]
 process_mode = 0
@@ -81,17 +119,17 @@ wait_time = 0.25
 one_shot = true
 
 [node name="JumpCast1" type="RayCast2D" parent="Player"]
-position = Vector2( -32, 32 )
+position = Vector2( -32, 64 )
 enabled = true
 cast_to = Vector2( 0, 1 )
 
 [node name="JumpCast2" type="RayCast2D" parent="Player"]
-position = Vector2( 32, 32 )
+position = Vector2( 32, 64 )
 enabled = true
 cast_to = Vector2( 0, 1 )
 
 [node name="JumpCast3" type="RayCast2D" parent="Player"]
-position = Vector2( 0, 32 )
+position = Vector2( 0, 64 )
 enabled = true
 cast_to = Vector2( 0, 1 )
 
@@ -131,7 +169,8 @@ collision_layer = 32
 collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Hurtbox"]
-shape = SubResource( 11 )
+position = Vector2( 0, 4 )
+shape = SubResource( 13 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
