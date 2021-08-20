@@ -71,6 +71,8 @@ extents = Vector2( 34, 62 )
 [node name="PlayerScene" type="Node2D"]
 
 [node name="Player" type="KinematicBody2D" parent="."]
+collision_layer = 3
+collision_mask = 3
 script = ExtResource( 2 )
 moveSpeed = 480
 accMult = 40
@@ -96,7 +98,7 @@ texture = ExtResource( 3 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Player"]
 scale = Vector2( 8, 8 )
 frames = SubResource( 10 )
-frame = 8
+frame = 6
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
@@ -117,16 +119,19 @@ one_shot = true
 position = Vector2( -32, 64 )
 enabled = true
 cast_to = Vector2( 0, 1 )
+collision_mask = 3
 
 [node name="JumpCast2" type="RayCast2D" parent="Player"]
 position = Vector2( 32, 64 )
 enabled = true
 cast_to = Vector2( 0, 1 )
+collision_mask = 3
 
 [node name="JumpCast3" type="RayCast2D" parent="Player"]
 position = Vector2( 0, 64 )
 enabled = true
 cast_to = Vector2( 0, 1 )
+collision_mask = 3
 
 [node name="MoveDir" type="ColorRect" parent="Player"]
 margin_left = -4.0
@@ -194,6 +199,6 @@ __meta__ = {
 [connection signal="health_updated" from="Player/Health" to="Camera2D/HealthBar" method="_on_Health_health_updated"]
 [connection signal="maxHealth_updated" from="Player/Health" to="Camera2D/HealthBar" method="_on_Health_maxHealth_updated"]
 [connection signal="timeout" from="Player/HurtTimer" to="Player" method="_on_HurtTimer_timeout"]
-[connection signal="body_entered" from="Player/Weapon/Area2D" to="Player" method="_on_Area2D_body_entered"]
 [connection signal="body_entered" from="Player/Weapon/Area2D" to="Player/Weapon" method="_on_Area2D_body_entered"]
+[connection signal="body_entered" from="Player/Weapon/Area2D" to="Player" method="_on_Area2D_body_entered"]
 [connection signal="timeout" from="Player/Weapon/AttackTimer" to="Player/Weapon" method="_on_AttackTimer_timeout"]

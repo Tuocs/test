@@ -3,6 +3,8 @@ extends TileMap
 
 export var length = 1
 
+var original_collision = collision_mask
+
 var sprites = Array()
 
 
@@ -17,5 +19,5 @@ func _process(delta):
 		collision_layer = 0b0
 		collision_mask = 0b0
 	else:
-		collision_layer = 0b11
-		collision_mask = 0b11
+		collision_layer = original_collision
+		collision_mask = original_collision
