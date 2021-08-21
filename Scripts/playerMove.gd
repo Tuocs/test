@@ -72,6 +72,10 @@ func hit_by_enemies():
 				modulate.a = .5
 				$HurtTimer.start()
 				
+				#knock the enemy away from the player
+				if body.has_method("get_knocked"):
+					body.get_knocked()
+				
 				return
 
 
@@ -88,6 +92,14 @@ func display_movedir():
 		$AnimatedSprite.flip_h = 0
 	elif velocity.x < 0:
 		$AnimatedSprite.flip_h = 1
+	
+	#choose which anim to use
+	if abs(velocity.x) > 0:
+		$AnimatedSprite.animation = "run"
+		$AnimatedSprite.speed_scale = abs(velocity.x) / moveSpeed
+	else:
+		$AnimatedSprite.animation = "idle"
+		$AnimatedSprite.speed_scale = 1
 
 
 func player_move(delta):

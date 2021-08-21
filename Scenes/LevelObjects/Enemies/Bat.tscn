@@ -31,6 +31,8 @@ animations = [ {
 extents = Vector2( 24, 12 )
 
 [node name="Bat" type="KinematicBody2D"]
+collision_layer = 33
+collision_mask = 33
 script = ExtResource( 2 )
 attackDistance = 500
 

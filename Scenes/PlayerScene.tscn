@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://Scripts/CamFollowPlayer.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/playerMove.gd" type="Script" id=2]
@@ -10,7 +10,7 @@
 [ext_resource path="res://Scripts/HealthBar.gd" type="Script" id=8]
 [ext_resource path="res://Scripts/Attack.gd" type="Script" id=9]
 [ext_resource path="res://Assets/SoundEffects/PlayerSwing.wav" type="AudioStream" id=10]
-[ext_resource path="res://Assets/Player/player_idle_v2.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Player/player.png" type="Texture" id=11]
 [ext_resource path="res://Assets/SoundEffects/PlayerJump.wav" type="AudioStream" id=12]
 [ext_resource path="res://Assets/SoundEffects/PlayerHurt.wav" type="AudioStream" id=13]
 
@@ -50,22 +50,75 @@ region = Rect2( 112, 0, 16, 16 )
 atlas = ExtResource( 11 )
 region = Rect2( 128, 0, 16, 16 )
 
-[sub_resource type="SpriteFrames" id=10]
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 11 )
+region = Rect2( 0, 16, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 11 )
+region = Rect2( 16, 16, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 11 )
+region = Rect2( 32, 16, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 11 )
+region = Rect2( 48, 16, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 11 )
+region = Rect2( 64, 16, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 11 )
+region = Rect2( 80, 16, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 11 )
+region = Rect2( 96, 16, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 11 )
+region = Rect2( 112, 16, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 11 )
+region = Rect2( 128, 16, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 11 )
+region = Rect2( 144, 16, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=20]
+atlas = ExtResource( 11 )
+region = Rect2( 160, 16, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=21]
+atlas = ExtResource( 11 )
+region = Rect2( 176, 16, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=22]
 animations = [ {
 "frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
 "loop": true,
-"name": "default",
-"speed": 10.0
+"name": "idle",
+"speed": 9.0
+}, {
+"frames": [ SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 21 ) ],
+"loop": true,
+"name": "run",
+"speed": 13.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=11]
+[sub_resource type="RectangleShape2D" id=23]
 extents = Vector2( 4, 7.5 )
 
-[sub_resource type="AudioStreamRandomPitch" id=12]
+[sub_resource type="AudioStreamRandomPitch" id=24]
 audio_stream = ExtResource( 10 )
 random_pitch = 1.5
 
-[sub_resource type="RectangleShape2D" id=13]
+[sub_resource type="RectangleShape2D" id=25]
 extents = Vector2( 34, 62 )
 
 [node name="PlayerScene" type="Node2D"]
@@ -74,7 +127,6 @@ extents = Vector2( 34, 62 )
 collision_layer = 3
 collision_mask = 3
 script = ExtResource( 2 )
-moveSpeed = 480
 accMult = 40
 jumpSpeed = 800
 fallSpeed = 80
@@ -97,14 +149,15 @@ texture = ExtResource( 3 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Player"]
 scale = Vector2( 8, 8 )
-frames = SubResource( 10 )
-frame = 6
+frames = SubResource( 22 )
+animation = "idle"
+frame = 8
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2( 0, 4 )
 scale = Vector2( 8, 8 )
-shape = SubResource( 11 )
+shape = SubResource( 23 )
 
 [node name="JumpTimer" type="Timer" parent="Player"]
 process_mode = 0
@@ -163,7 +216,7 @@ wait_time = 0.15
 one_shot = true
 
 [node name="AttackSoundPlayer" type="AudioStreamPlayer2D" parent="Player/Weapon"]
-stream = SubResource( 12 )
+stream = SubResource( 24 )
 
 [node name="Hurtbox" type="Area2D" parent="Player"]
 collision_layer = 32
@@ -171,19 +224,19 @@ collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Hurtbox"]
 position = Vector2( 0, 4 )
-shape = SubResource( 13 )
+shape = SubResource( 25 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
-zoom = Vector2( 1.5, 1.5 )
+zoom = Vector2( 2, 2 )
 script = ExtResource( 1 )
 followspeed = 0.125
 
 [node name="HealthBar" type="TextureProgress" parent="Camera2D"]
-margin_left = 680.0
-margin_top = 480.0
-margin_right = 734.0
-margin_bottom = 490.0
+margin_left = 994.0
+margin_top = 654.0
+margin_right = 1048.0
+margin_bottom = 664.0
 rect_scale = Vector2( 5, 5 )
 texture_under = ExtResource( 7 )
 texture_over = ExtResource( 6 )
