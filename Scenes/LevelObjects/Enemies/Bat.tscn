@@ -40,7 +40,7 @@ attackDistance = 500
 scale = Vector2( 8, 8 )
 frames = SubResource( 5 )
 animation = "flying"
-frame = 3
+frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -49,7 +49,5 @@ shape = SubResource( 6 )
 
 [node name="RetargetTimer" type="Timer" parent="."]
 autostart = true
-
-[node name="Navigation2D" type="Navigation2D" parent="."]
 
 [connection signal="timeout" from="RetargetTimer" to="." method="_on_RetargetTimer_timeout"]

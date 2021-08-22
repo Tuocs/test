@@ -6,6 +6,7 @@ export var damage = 10
 export var moveSpeed = 300
 export var attackDistance = 200
 export var jiggle = 200
+export var knockSpeed = 500
 
 var velocity = Vector2()
 var target = Vector2()
@@ -31,7 +32,11 @@ func _process(delta):
 	#move towards wherever we've decided to target
 	velocity = velocity.linear_interpolate(target - global_position, 1)
 	
-	print(velocity, target)
+	#turn the bat in the direction it's moving
+	if velocity.x > 0:
+		$AnimatedSprite.flip_h = true
+	else:
+		$AnimatedSprite.flip_h = false
 	
 	move_and_slide(velocity, Vector2.UP)
 
@@ -39,6 +44,8 @@ func _process(delta):
 #take damage
 func hit(dmg):
 	health -= dmg
+	
+	get_knocked()
 	
 	if health <= 0:
 		die()
@@ -63,7 +70,7 @@ func _on_RetargetTimer_timeout():
 
 #move away from the player for a sec after damaging them
 func get_knocked():
-	target = ((-player.global_position + global_position).normalized() * moveSpeed + global_position)
+	target = ((-player.global_position + global_position).normalized() * knockSpeed + global_position)
 	getting_knocked = true
 	$RetargetTimer.stop()
 	$RetargetTimer.start()

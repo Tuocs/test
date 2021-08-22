@@ -2,10 +2,7 @@ extends KinematicBody2D
 
 
 export var moveSpeed = 600
-export var accMult = 60
 export var jumpSpeed = 700
-export var fallSpeed = 50
-export var maxYVel = 1000
 export var hurtSpeed = 1000
 
 export var jumpTolerance = 8
@@ -110,17 +107,17 @@ func player_move(delta):
 	if on_floor:
 		velocity.y = 0
 	else:
-		velocity.y += fallSpeed
+		velocity.y += Globals.fallSpeed
 	
 	
 	#player goes left right
 	if Input.is_action_pressed("ui_left") && !Input.is_action_pressed("ui_right"):
-		velocity.x -= accMult
+		velocity.x -= Globals.accMult
 	elif Input.is_action_pressed("ui_right") && !Input.is_action_pressed("ui_left"):
-		velocity.x += accMult
+		velocity.x += Globals.accMult
 	else: #decelerate when no button pressed
-		velocity.x += -sign(velocity.x) * accMult
-		if abs(velocity.x) < accMult:
+		velocity.x += -sign(velocity.x) * Globals.accMult
+		if abs(velocity.x) < Globals.accMult:
 			velocity.x = 0
 	
 	velocity.x = clamp(velocity.x, -moveSpeed, moveSpeed)
@@ -146,7 +143,7 @@ func player_move(delta):
 	if !$JumpTimer.is_stopped():
 		velocity.y = -jumpSpeed
 	
-	velocity.y = clamp(velocity.y, -maxYVel, maxYVel)
+	velocity.y = clamp(velocity.y, -Globals.maxYVel, Globals.maxYVel)
 
 
 func _on_Area2D_body_entered(body):
