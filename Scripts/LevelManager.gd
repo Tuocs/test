@@ -75,9 +75,11 @@ func LoadRoom(roomtype, x, y):
 	add_child(RoomMatrix[x][y])
 	move_child(RoomMatrix[x][y], 0)
 	RoomMatrix[x][y].global_position = Vector2(x*3500, y*3500)
+	RoomMatrix[x][y].setXY(x,y)
 
 
 #move player to room
 #side was to show what side of room you entered from so you can spawn by the door
 func ChangeRoom(x, y, side):
 	get_node("PlayerScene/Player").global_position = Vector2((x * 3500)+200,(y * 3500)+400)
+	print("entering (" , x , ", " , y , ")")
