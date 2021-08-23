@@ -29,3 +29,4 @@ position = Vector2( 97.9901, 926.652 )
 
 [node name="LevelLoader" parent="." instance=ExtResource( 3 )]
 position = Vector2( 1791.37, 895.659 )
+side = 1
