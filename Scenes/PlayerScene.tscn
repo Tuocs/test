@@ -127,7 +127,7 @@ extents = Vector2( 34, 62 )
 collision_layer = 3
 collision_mask = 3
 script = ExtResource( 2 )
-jumpSpeed = 800
+jumpSpeed = 1000
 hurtSpeed = 1200
 jumpTolerance = 24
 jumpSound = ExtResource( 12 )
@@ -148,7 +148,7 @@ texture = ExtResource( 3 )
 scale = Vector2( 8, 8 )
 frames = SubResource( 22 )
 animation = "idle"
-frame = 2
+frame = 4
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
@@ -207,7 +207,7 @@ position = Vector2( -32, 0 )
 polygon = PoolVector2Array( 16, -104, 88, -56, 138, 0, 88, 56, 16, 104, 18, 100, 88, 54, 136, 0, 86, -54, 18, -100 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player/Weapon/Area2D"]
-polygon = PoolVector2Array( 56, -56, 80, -32, 104, 0, 80, 32, 56, 56, -16, 104, 16, 48, 26, 0, 16, -48, -16, -104 )
+polygon = PoolVector2Array( 56, -56, 80, -32, 106, 0, 80, 32, 56, 56, -16, 104, -48, 64, -48, 0, -48, -56, -16, -104 )
 
 [node name="AttackTimer" type="Timer" parent="Player/Weapon"]
 wait_time = 0.15
