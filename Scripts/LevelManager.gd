@@ -82,4 +82,5 @@ func LoadRoom(roomtype, x, y):
 #side was to show what side of room you entered from so you can spawn by the door
 func ChangeRoom(x, y, side):
 	get_node("PlayerScene/Player").global_position = Vector2((x * 3500)+200,(y * 3500)+400)
+	RoomMatrix[x][y].setLoaded(true)
 	print("entering (" , x , ", " , y , ")")
