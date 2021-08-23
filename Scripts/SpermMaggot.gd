@@ -39,7 +39,12 @@ func _process(delta):
 		if abs(velocity.x) < Globals.accMult:
 			velocity.x = 0
 		
+		#stop it jiggling under the player
+		if abs(player.global_position.x - global_position.x) < 15:
+			velocity.x = 0
+		
 		velocity.x = clamp(abs(velocity.x), 0, moveSpeed) * sign(velocity.x)
+		
 	else: #just try to decelerate
 		velocity.x -= Globals.accMult * sign(velocity.x)
 		
@@ -47,11 +52,14 @@ func _process(delta):
 		if abs(velocity.x) < Globals.accMult:
 			velocity.x = 0
 	
-	#fall off of ledges
-	if !($FallCast1.is_colliding() || $FallCast2.is_colliding()):
-		velocity.y += Globals.fallSpeed
-	else:
+	#check if the maggot is on the floor
+	var on_floor = test_move(global_transform, Vector2(0,1))
+	
+	#maggot falls
+	if on_floor:
 		velocity.y = 0
+	else:
+		velocity.y += Globals.fallSpeed
 	
 	velocity.y = clamp(velocity.y, -Globals.maxYVel, Globals.maxYVel)
 	

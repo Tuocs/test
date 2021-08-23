@@ -53,7 +53,6 @@ func fall_through_plats():
 	if Input.is_action_pressed("ui_down") && Input.is_action_pressed("ui_accept"):
 		collision_layer &= ~0b10
 		collision_mask &= ~0b10
-		print(collision_mask)
 	else:
 		collision_layer |= 0b10
 		collision_mask |= 0b10
