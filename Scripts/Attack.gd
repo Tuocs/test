@@ -14,7 +14,7 @@ func _ready():
 	$Area2D.collision_layer = 0b0
 	$Area2D.collision_mask = 0b0
 	
-	$Polygon2D.visible = false
+	$Area2D/Polygon2D.visible = false
 
 
 func _process(delta):
@@ -41,7 +41,7 @@ func _process(delta):
 		$Area2D.collision_layer = 32
 		$Area2D.collision_mask = 32
 		
-		$Polygon2D.visible = true
+		$Area2D/Polygon2D.visible = true
 		
 		$AttackTimer.start()
 		
@@ -55,7 +55,7 @@ func _on_AttackTimer_timeout():
 	$Area2D.collision_layer = 0b0
 	$Area2D.collision_mask = 0b0
 	
-	$Polygon2D.visible = false
+	$Area2D/Polygon2D.visible = false
 
 
 func _on_Area2D_body_entered(body):

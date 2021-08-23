@@ -3,10 +3,15 @@ extends KinematicBody2D
 
 export var moveSpeed = 200
 export var attackDistance = 200
+export var damage = 10
+export var health = 20
 
 var velocity = Vector2()
 
 onready var player = get_node("../../PlayerScene/Player")
+
+const enemy = true
+const bouncy = true
 
 
 # Called when the node enters the scene tree for the first time.
@@ -51,3 +56,15 @@ func _process(delta):
 	velocity.y = clamp(velocity.y, -Globals.maxYVel, Globals.maxYVel)
 	
 	move_and_slide(velocity, Vector2.UP)
+
+
+#take damage
+func hit(dmg):
+	health -= dmg
+	
+	if health <= 0:
+		die()
+
+
+func die():
+	queue_free()

@@ -44,6 +44,8 @@ animations = [ {
 extents = Vector2( 24, 8 )
 
 [node name="SpermMaggot" type="KinematicBody2D"]
+collision_layer = 35
+collision_mask = 35
 script = ExtResource( 2 )
 attackDistance = 500
 
@@ -51,7 +53,7 @@ attackDistance = 500
 scale = Vector2( 8, 8 )
 frames = SubResource( 7 )
 animation = "hop"
-frame = 5
+frame = 4
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
