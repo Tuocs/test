@@ -2,31 +2,82 @@ extends Node2D
 
 #types of rooms
 var Start = load ("res://Scenes/Rooms/TestLevel.tscn")
-var Second = load ("res://Scenes/Rooms/TestLevel - Copy.tscn")
+var Hallway = load ("res://Scenes/Rooms/TestLevel - Copy.tscn")
 
-#list of rooms on floor
-var roomArray = [null, null, null, null, null, null, null, null, null]
-#current highest room
-var roomCount = 0
+
+
+var width = 5
+var height = 5
+var IdMatrix = []
+var RoomMatrix = []
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	LoadRoom(Start)
-	LoadRoom(Second)#this causes a problem with enemys tracking player before they go to room, should load later probably 
-						  #or just add the line of sight check before they more twords player, should do both
-	ChangeRoom(0, 0)
+	arraySetup()
+	GenerateLayout()
+	LoadLayout()
+	
+	ChangeRoom(0, 0, 0)
+
+func arraySetup():
+	for x in range(width):
+		IdMatrix.append([])
+		for y in range(height):
+			IdMatrix[x].append(0)
+	
+	for x in range(width):
+		RoomMatrix.append([])
+		for y in range(height):
+			RoomMatrix[x].append(0)
+
+
+func GenerateLayout():
+	IdMatrix[0][0] = 2
+	IdMatrix[1][0] = 1
+	IdMatrix[2][0] = 1
+	IdMatrix[3][0] = 1
+	IdMatrix[4][0] = 1
+	IdMatrix[0][1] = 1
+	IdMatrix[1][1] = 1
+	IdMatrix[2][1] = 1
+	IdMatrix[3][1] = 1
+	IdMatrix[4][1] = 1
+	IdMatrix[0][2] = 1
+	IdMatrix[1][2] = 1
+	IdMatrix[2][2] = 1
+	IdMatrix[3][2] = 1
+	IdMatrix[4][2] = 1
+	IdMatrix[0][3] = 1
+	IdMatrix[1][3] = 1
+	IdMatrix[2][3] = 1
+	IdMatrix[3][3] = 1
+	IdMatrix[4][3] = 1
+	IdMatrix[0][4] = 1
+	IdMatrix[1][4] = 1
+	IdMatrix[2][4] = 1
+	IdMatrix[3][4] = 1
+	IdMatrix[4][4] = 1
+
+func LoadLayout():
+	for x in range(width):
+		for y in range(height):
+			if IdMatrix[x][y] == 1:
+				LoadRoom(Hallway, x, y)
+			if IdMatrix[x][y] == 2:
+				LoadRoom(Start, x, y)
+
 
 
 #spawn in a room into the world
-func LoadRoom(roomtype):
-	roomArray[roomCount] = roomtype.instance()
-	add_child(roomArray[roomCount])
-	move_child(roomArray[roomCount], 0)
-	roomArray[roomCount].global_position = Vector2(0, roomCount*1500)
-	roomCount += 1
+func LoadRoom(roomtype, x, y):
+	RoomMatrix[x][y] = roomtype.instance()
+	add_child(RoomMatrix[x][y])
+	move_child(RoomMatrix[x][y], 0)
+	RoomMatrix[x][y].global_position = Vector2(x*3500, y*3500)
+
 
 #move player to room
 #side was to show what side of room you entered from so you can spawn by the door
-func ChangeRoom(room, side):
-	get_node("PlayerScene/Player").global_position = Vector2(200,(room * 1500)+400)
+func ChangeRoom(x, y, side):
+	get_node("PlayerScene/Player").global_position = Vector2((x * 3500)+200,(y * 3500)+400)
