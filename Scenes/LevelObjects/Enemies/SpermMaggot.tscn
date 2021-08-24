@@ -53,18 +53,8 @@ attackDistance = 500
 scale = Vector2( 8, 8 )
 frames = SubResource( 7 )
 animation = "hop"
-frame = 2
+frame = 4
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 8 )
-
-[node name="FallCast1" type="RayCast2D" parent="."]
-position = Vector2( -24, 8 )
-cast_to = Vector2( 0, 1 )
-collision_mask = 3
-
-[node name="FallCast2" type="RayCast2D" parent="."]
-position = Vector2( 24, 8 )
-cast_to = Vector2( 0, 1 )
-collision_mask = 3
