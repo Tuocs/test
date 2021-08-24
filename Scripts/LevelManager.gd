@@ -5,7 +5,6 @@ var Start = load ("res://Scenes/Rooms/TestLevel.tscn")
 var Hallway = load ("res://Scenes/Rooms/TestLevel - Copy.tscn")
 
 
-
 var width = 5
 var height = 5
 var IdMatrix = []
@@ -20,6 +19,7 @@ func _ready():
 	
 	ChangeRoom(0, 0, 0)
 
+#idk, does weird stuff to make a 2d array work
 func arraySetup():
 	for x in range(width):
 		IdMatrix.append([])
@@ -33,32 +33,35 @@ func arraySetup():
 
 
 func GenerateLayout():
+	
+	#this is temporary if you want to try a specific room layout
 	IdMatrix[0][0] = 2
 	IdMatrix[1][0] = 1
 	IdMatrix[2][0] = 1
 	IdMatrix[3][0] = 1
 	IdMatrix[4][0] = 1
-	IdMatrix[0][1] = 1
-	IdMatrix[1][1] = 1
-	IdMatrix[2][1] = 1
-	IdMatrix[3][1] = 1
-	IdMatrix[4][1] = 1
-	IdMatrix[0][2] = 1
-	IdMatrix[1][2] = 1
-	IdMatrix[2][2] = 1
-	IdMatrix[3][2] = 1
-	IdMatrix[4][2] = 1
-	IdMatrix[0][3] = 1
-	IdMatrix[1][3] = 1
-	IdMatrix[2][3] = 1
-	IdMatrix[3][3] = 1
-	IdMatrix[4][3] = 1
-	IdMatrix[0][4] = 1
-	IdMatrix[1][4] = 1
-	IdMatrix[2][4] = 1
-	IdMatrix[3][4] = 1
-	IdMatrix[4][4] = 1
+	IdMatrix[0][1] = 0
+	IdMatrix[1][1] = 0
+	IdMatrix[2][1] = 0
+	IdMatrix[3][1] = 0
+	IdMatrix[4][1] = 0
+	IdMatrix[0][2] = 0
+	IdMatrix[1][2] = 0
+	IdMatrix[2][2] = 0
+	IdMatrix[3][2] = 0
+	IdMatrix[4][2] = 0
+	IdMatrix[0][3] = 0
+	IdMatrix[1][3] = 0
+	IdMatrix[2][3] = 0
+	IdMatrix[3][3] = 0
+	IdMatrix[4][3] = 0
+	IdMatrix[0][4] = 0
+	IdMatrix[1][4] = 0
+	IdMatrix[2][4] = 0
+	IdMatrix[3][4] = 0
+	IdMatrix[4][4] = 0
 
+#will take the IdMatrix array and generate the rooms into the world
 func LoadLayout():
 	for x in range(width):
 		for y in range(height):
@@ -69,7 +72,7 @@ func LoadLayout():
 
 
 
-#spawn in a room into the world
+#spawn in a individual room into the world
 func LoadRoom(roomtype, x, y):
 	RoomMatrix[x][y] = roomtype.instance()
 	add_child(RoomMatrix[x][y])
