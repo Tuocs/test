@@ -14,7 +14,6 @@ var target = Vector2()
 var getting_knocked = false
 
 onready var player = get_node("../../PlayerScene/Player")
-var rng = RandomNumberGenerator.new()
 var date_time = OS.get_datetime()
 
 const bouncy = true
@@ -23,7 +22,6 @@ const enemy = true
 
 func _ready():
 	#seed the rng
-	rng.set_seed(date_time["hour"] * date_time["minute"] * date_time["second"])
 	
 	target = global_position
 
@@ -63,7 +61,8 @@ func _on_RetargetTimer_timeout():
 			target = player.global_position
 		#otherwise, fly around aimlessly
 		else:
-			target = position + Vector2(rng.randi_range(-jiggle, jiggle), rng.randi_range(-jiggle, jiggle))
+			target = position + Vector2(Globals.rng.randi_range(-jiggle, jiggle), \
+			Globals.rng.randi_range(-jiggle, jiggle))
 	else:
 		getting_knocked = false
 
