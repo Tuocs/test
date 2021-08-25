@@ -39,8 +39,18 @@ func _process(delta):
 	
 	move_and_slide(velocity, Vector2.UP)
 	
-	if test_move(global_transform, Vector2(0,1)):
+	
+	#land (this is a weird fix, but it works)
+	if test_move(global_transform, Vector2(0,1)) && !onFloor:
 		velocity.x = 0
+		
+		if player.global_position.y <= global_position.y:
+			collision_layer |= 0b10
+			collision_mask |= 0b10
+		else:
+			collision_layer &= ~0b10
+			collision_mask &= ~0b10
+
 
 #take damage
 func hit(dmg):
