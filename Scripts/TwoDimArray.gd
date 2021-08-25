@@ -1,8 +1,6 @@
 extends Reference
 
 
-class_name TwoDimArray
-
 var col #columns
 var row #rows
 

@@ -4,9 +4,10 @@ extends Node2D
 var Start = load ("res://Scenes/Rooms/TestLevel.tscn")
 var Hallway = load ("res://Scenes/Rooms/TestLevel - Copy.tscn")
 
-
 var width = 5
 var height = 5
+
+var LayoutMatrix = PoolIntArray()
 var IdMatrix = []
 var RoomMatrix = []
 
@@ -18,6 +19,7 @@ func _ready():
 	LoadLayout()
 	
 	ChangeRoom(0, 0, 0)
+
 
 #idk, does weird stuff to make a 2d array work
 func arraySetup():
@@ -33,43 +35,48 @@ func arraySetup():
 
 
 func GenerateLayout():
+	#generate some random ints
+	for i in 32:
+		LayoutMatrix.push_back(Globals.rng.randi())
 	
-	#this is temporary if you want to try a specific room layout
-	IdMatrix[0][0] = 2
-	IdMatrix[1][0] = 1
-	IdMatrix[2][0] = 1
-	IdMatrix[3][0] = 1
-	IdMatrix[4][0] = 1
-	IdMatrix[0][1] = 0
-	IdMatrix[1][1] = 0
-	IdMatrix[2][1] = 0
-	IdMatrix[3][1] = 0
-	IdMatrix[4][1] = 0
-	IdMatrix[0][2] = 0
-	IdMatrix[1][2] = 0
-	IdMatrix[2][2] = 0
-	IdMatrix[3][2] = 0
-	IdMatrix[4][2] = 0
-	IdMatrix[0][3] = 0
-	IdMatrix[1][3] = 0
-	IdMatrix[2][3] = 0
-	IdMatrix[3][3] = 0
-	IdMatrix[4][3] = 0
-	IdMatrix[0][4] = 0
-	IdMatrix[1][4] = 0
-	IdMatrix[2][4] = 0
-	IdMatrix[3][4] = 0
-	IdMatrix[4][4] = 0
+	#get rid of doors that don't go anywhere
+	for i in height + 1:
+		var row = LayoutMatrix[(height * 2) + 1]
+		
+		for j in width + 1:
+			if j == 0 || j == width || \
+			(row & 1 << (j * 2) + 1) == 0 || \
+			(row & 1 << (j * 2) - 1) == 0:
+				LayoutMatrix[(height * 2) + 1] = 0
+	
+	for i in height + 1:
+		var nextRow = LayoutMatrix[(height * 2) + 1]
+		var lastRow = LayoutMatrix[(height * 2) - 1]
+		
+		for j in width + 1:
+			if j == 0 || j == width || \
+			nextRow & 1 << (j * 2) + 1 == 0 || \
+			nextRow & 1 << (j * 2) + 1 == 0:
+				LayoutMatrix[height * 2] = 0
+	
+	var s = ""
+	for i in height * 2:
+		for j in width * 2:
+			s += str((LayoutMatrix[i] & 1 << j))
+		print(s)
+		s = ""
+
 
 #will take the IdMatrix array and generate the rooms into the world
 func LoadLayout():
+	IdMatrix[0][0] = 2
+	
 	for x in range(width):
 		for y in range(height):
 			if IdMatrix[x][y] == 1:
 				LoadRoom(Hallway, x, y)
 			if IdMatrix[x][y] == 2:
 				LoadRoom(Start, x, y)
-
 
 
 #spawn in a individual room into the world
