@@ -250,6 +250,6 @@ __meta__ = {
 [connection signal="health_updated" from="Player/Health" to="Camera2D/HealthBar" method="_on_Health_health_updated"]
 [connection signal="maxHealth_updated" from="Player/Health" to="Camera2D/HealthBar" method="_on_Health_maxHealth_updated"]
 [connection signal="timeout" from="Player/HurtTimer" to="Player" method="_on_HurtTimer_timeout"]
-[connection signal="body_entered" from="Player/Weapon/Area2D" to="Player" method="_on_Area2D_body_entered"]
 [connection signal="body_entered" from="Player/Weapon/Area2D" to="Player/Weapon" method="_on_Area2D_body_entered"]
+[connection signal="body_entered" from="Player/Weapon/Area2D" to="Player" method="_on_Area2D_body_entered"]
 [connection signal="timeout" from="Player/Weapon/AttackTimer" to="Player/Weapon" method="_on_AttackTimer_timeout"]
