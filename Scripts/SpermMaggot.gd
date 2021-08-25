@@ -8,7 +8,7 @@ export var health = 20
 
 var velocity = Vector2()
 
-onready var player = get_node("../../PlayerScene/Player")
+onready var player = get_node("../../../PlayerScene/Player")
 
 const enemy = true
 const bouncy = true

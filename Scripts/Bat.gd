@@ -13,7 +13,7 @@ var target = Vector2()
 
 var getting_knocked = false
 
-onready var player = get_node("../../PlayerScene/Player")
+onready var player = get_node("../../../PlayerScene/Player")
 var date_time = OS.get_datetime()
 
 const bouncy = true

@@ -11,7 +11,7 @@ var velocity = Vector2()
 var onFloor = false
 var xDirToPlayer = 1
 
-onready var player = get_node("../../PlayerScene/Player")
+onready var player = get_node("../../../PlayerScene/Player")
 
 const enemy = true
 const bouncy = true
