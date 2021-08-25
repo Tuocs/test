@@ -4,25 +4,27 @@ extends Node2D
 var Start = load ("res://Scenes/Rooms/TestLevel.tscn")
 var Hallway = load ("res://Scenes/Rooms/TestLevel - Copy.tscn")
 
-var width = 5
-var height = 5
+var width = 11
+var height = 7
+var roomDensity = .35
+var numRooms = int(width * height * roomDensity)
 
-var LayoutMatrix = PoolIntArray()
+var LayoutMatrix = TwoDimArray.new(width, height)
 var IdMatrix = []
 var RoomMatrix = []
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	arraySetup()
-	GenerateLayout()
-	LoadLayout()
+	array_setup()
+	generate_layout()
+	load_layout()
 	
-	ChangeRoom(0, 0, 0)
+	change_room(0, 0, 0)
 
 
 #idk, does weird stuff to make a 2d array work
-func arraySetup():
+func array_setup():
 	for x in range(width):
 		IdMatrix.append([])
 		for y in range(height):
@@ -34,53 +36,57 @@ func arraySetup():
 			RoomMatrix[x].append(0)
 
 
-func GenerateLayout():
-	#generate some random ints
-	for i in 32:
-		LayoutMatrix.push_back(Globals.rng.randi())
+func generate_layout():
+	#fill the room layout with zeroes (no rooms)
+	for i in width:
+		for j in height:
+			LayoutMatrix.assign(i, j, 0)
 	
-	#get rid of doors that don't go anywhere
-	for i in height + 1:
-		var row = LayoutMatrix[(height * 2) + 1]
+	#add the first room
+	LayoutMatrix.assign(int(width / 2), int(height / 2), 0b1111)
+	
+	#send out a recursive call in each of the four cardinal directions,
+	#to make branches from the center
+	for i in 4:
+		var dir = Vector2(0, 0)
 		
-		for j in width + 1:
-			if j == 0 || j == width || \
-			(row & 1 << (j * 2) + 1) == 0 || \
-			(row & 1 << (j * 2) - 1) == 0:
-				LayoutMatrix[(height * 2) + 1] = 0
-	
-	for i in height + 1:
-		var nextRow = LayoutMatrix[(height * 2) + 1]
-		var lastRow = LayoutMatrix[(height * 2) - 1]
+		match i:
+			0:
+				dir.y = -1
+			1:
+				dir.x = 1
+			2:
+				dir.y = 1
+			3:
+				dir.x = -1
 		
-		for j in width + 1:
-			if j == 0 || j == width || \
-			nextRow & 1 << (j * 2) + 1 == 0 || \
-			nextRow & 1 << (j * 2) + 1 == 0:
-				LayoutMatrix[height * 2] = 0
-	
-	var s = ""
-	for i in height * 2:
-		for j in width * 2:
-			s += str((LayoutMatrix[i] & 1 << j))
-		print(s)
-		s = ""
+		generate_recurse(dir, Vector2(int(width / 2), int(height / 2)), int(numRooms / 4)) 
+
+
+func generate_recurse(dir, pos, roomsToFill):
+	while roomsToFill > 0:
+		pos += dir
+		
+		if pos.x > width || pos.x < 0 || pos.y < 0 || pos.y > height:
+			return
+		
+		roomsToFill -= 1
 
 
 #will take the IdMatrix array and generate the rooms into the world
-func LoadLayout():
+func load_layout():
 	IdMatrix[0][0] = 2
 	
 	for x in range(width):
 		for y in range(height):
 			if IdMatrix[x][y] == 1:
-				LoadRoom(Hallway, x, y)
+				load_room(Hallway, x, y)
 			if IdMatrix[x][y] == 2:
-				LoadRoom(Start, x, y)
+				load_room(Start, x, y)
 
 
 #spawn in a individual room into the world
-func LoadRoom(roomtype, x, y):
+func load_room(roomtype, x, y):
 	RoomMatrix[x][y] = roomtype.instance()
 	add_child(RoomMatrix[x][y])
 	move_child(RoomMatrix[x][y], 0)
@@ -90,7 +96,7 @@ func LoadRoom(roomtype, x, y):
 
 #move player to room
 #side was to show what side of room you entered from so you can spawn by the door
-func ChangeRoom(x, y, side):
+func change_room(x, y, side):
 	get_node("PlayerScene/Player").global_position = Vector2((x * 3500)+200,(y * 3500)+400)
 	RoomMatrix[x][y].setLoaded(true)
 	print("entering (" , x , ", " , y , ")")
