@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scenes/Tilesets/BrickTiles.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Tilesets/GrassTiles.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Scenes/Tilesets/MiscTiles.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Tilesets/WoodPlatTiles.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scripts/RoomInfo.gd" type="Script" id=6]
+[ext_resource path="res://Scenes/Rooms/EnemyManager.gd" type="Script" id=7]
 
 [node name="RoomRoot" type="Node2D"]
 script = ExtResource( 6 )
@@ -30,6 +31,7 @@ __meta__ = {
 [node name="MiscTiles" parent="BottomRender" instance=ExtResource( 4 )]
 
 [node name="Enemies" type="Node2D" parent="."]
+script = ExtResource( 7 )
 __meta__ = {
 "_editor_description_": "This node's children should all be instances of scenes from the file res://Scenes/LevelObjects/Enemies."
 }
