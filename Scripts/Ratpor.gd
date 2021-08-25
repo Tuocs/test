@@ -10,6 +10,8 @@ export var knockSpeed = Vector2(300, -700)
 var velocity = Vector2()
 var onFloor = false
 var xDirToPlayer = 1
+var lastX = global_position.x
+var consecNowhereJumps = 0
 
 onready var player = get_node("../../../PlayerScene/Player")
 
@@ -33,6 +35,8 @@ func _process(delta):
 	else:
 		xDirToPlayer = -1
 	
+	
+	
 	#make the ratpor fall
 	if !onFloor:
 		velocity.y += Globals.fallSpeed
@@ -44,12 +48,21 @@ func _process(delta):
 	if test_move(global_transform, Vector2(0,1)) && !onFloor:
 		velocity.x = 0
 		
+		#fall through platforms towards player, or don't if the player is above or on the same level
 		if player.global_position.y <= global_position.y:
 			collision_layer |= 0b10
 			collision_mask |= 0b10
 		else:
 			collision_layer &= ~0b10
 			collision_mask &= ~0b10
+		
+		#count the consecutive jumps up against a wall
+		if int(global_position.x) == int(lastX):
+			consecNowhereJumps += 1
+		else:
+			consecNowhereJumps = 0
+		
+		lastX = global_position.x
 
 
 #take damage
@@ -72,5 +85,10 @@ func get_knocked():
 
 func _on_JumpTimer_timeout():
 	if onFloor && global_position.distance_to(player.global_position) < attackDistance:
+		#jump the opposite direction once if running up against a wall
+		if consecNowhereJumps >= 2:
+			consecNowhereJumps = 0
+			xDirToPlayer = -xDirToPlayer
+		
 		var jumpVariance = Vector2(Globals.rng.randi_range(-100, 100), Globals.rng.randi_range(-100, 100))
 		velocity = (jumpPower + jumpVariance) * Vector2(xDirToPlayer, 1)
