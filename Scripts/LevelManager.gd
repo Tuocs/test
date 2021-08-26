@@ -4,9 +4,9 @@ extends Node2D
 var Start = load ("res://Scenes/Rooms/TestLevel.tscn")
 var Hallway = load ("res://Scenes/Rooms/TestLevel - Copy.tscn")
 
-var width = 25
-var height = 13
-var roomDensity = .45
+var width = 15
+var height = 15
+var roomDensity = .2
 var numRooms = int(width * height * roomDensity)
 
 # ROOM DOOR LAYOUT in LayoutMatrix
@@ -69,7 +69,7 @@ func generate_layout():
 		generate_recurse(dir, Vector2(int(width / 2), int(height / 2)), \
 		int(numRooms / 4), false) 
 	
-	LayoutMatrix.display_as_binary()
+	LayoutMatrix.display_as_filled()
 
 
 func generate_recurse(dir, pos, roomsToFill, split):
@@ -108,8 +108,9 @@ func generate_recurse(dir, pos, roomsToFill, split):
 				var splitDir = dir * Vector2(-1, 1)
 				splitDir = Vector2(splitDir.y, splitDir.x)
 				
-				var splitRooms = roomsToFill / 3
-				splitRooms = clamp(splitRooms, 1, roomsToFill / 3)
+				var splitRooms = roomsToFill / 2
+				splitRooms = clamp(splitRooms, 1, roomsToFill / 2)
+				roomsToFill -= splitRooms
 				
 				generate_recurse(splitDir, pos, splitRooms, false)
 				
@@ -129,8 +130,9 @@ func generate_recurse(dir, pos, roomsToFill, split):
 				var splitDir = Vector2(dir.y, dir.x)
 				splitDir *= Vector2(-1, 1)
 				
-				var splitRooms = roomsToFill / 3
-				splitRooms = clamp(splitRooms, 1, roomsToFill / 3)
+				var splitRooms = roomsToFill / 2
+				splitRooms = clamp(splitRooms, 1, roomsToFill / 2)
+				roomsToFill -= splitRooms
 				
 				generate_recurse(splitDir, pos, splitRooms, false)
 				
@@ -145,7 +147,7 @@ func generate_recurse(dir, pos, roomsToFill, split):
 					doorSides |= 0b0100
 			
 			pass
-		elif Globals.rng.randi() % 2:
+		elif Globals.rng.randi() % 2 == 0:
 			split = true
 		
 		#add a hallway going to the next room, if there are more rooms to generate

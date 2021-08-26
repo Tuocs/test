@@ -49,3 +49,17 @@ func display_as_binary():
 			s += '|'
 		
 		print(s)
+
+
+func display_as_filled():
+	for j in row:
+		
+		var s = ""
+		
+		for i in col:
+			if index(i, j) != 0:
+				s += '█'
+			else:
+				s += ' '
+		
+		print(s)
