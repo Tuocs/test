@@ -9,6 +9,12 @@ var height = 7
 var roomDensity = .35
 var numRooms = int(width * height * roomDensity)
 
+# ROOM DOOR LAYOUT in LayoutMatrix
+# MSB 0bwxyz LSB
+#          w
+#     z  center  x
+#          y
+
 var LayoutMatrix = TwoDimArray.new(width, height)
 var IdMatrix = []
 var RoomMatrix = []
@@ -60,17 +66,71 @@ func generate_layout():
 			3:
 				dir.x = -1
 		
-		generate_recurse(dir, Vector2(int(width / 2), int(height / 2)), int(numRooms / 4)) 
+		generate_recurse(dir, Vector2(int(width / 2), int(height / 2)), \
+		 int(numRooms / 4), false) 
 
 
-func generate_recurse(dir, pos, roomsToFill):
-	while roomsToFill > 0:
+func generate_recurse(dir, pos, roomsToFill, split):
+	if roomsToFill > 0:
 		pos += dir
 		
+		#don't go out of bounds
 		if pos.x > width || pos.x < 0 || pos.y < 0 || pos.y > height:
 			return
 		
+		#add a hallway back to the last room
+		var doorSides = 0b0000
+		
+		if dir.y == 1:
+			doorSides |= 0b1000
+		elif dir.y == -1:
+			doorSides |= 0b0010
+		elif dir.x == 1:
+			doorSides |= 0b0001
+		elif dir.x == -1:
+			doorSides |= 0b0100
+		
+		#add split(s) if possible, or decide if you should on the next recursion
+		if split:
+			split = false
+			
+			var splitClockwise = randi() % 2
+			var splitCounterclockwise = randi() % 2
+			
+			if splitClockwise:
+				#mult then swap goes clockwise
+				var newDir = dir * Vector2(-1, 1)
+				newDir = Vector2(newDir.y, newDir.x)
+				
+				#TODO: decide how many rooms to give splits
+			
+			#guarantees at least one split
+			if splitCounterclockwise || !splitCounterclockwise:
+				pass #swap then mult goes counterclockwise
+			
+			pass
+		elif randi() % 2:
+			split = true
+		
+		#add a hallway going to the next room, if there are more rooms to generate
 		roomsToFill -= 1
+		
+		if roomsToFill > 0:
+			if dir.y == -1:
+				doorSides |= 0b1000
+			elif dir.y == 1:
+				doorSides |= 0b0010
+			elif dir.x == -1:
+				doorSides |= 0b0001
+			elif dir.x == 1:
+				doorSides |= 0b0100
+		
+		#recurse
+		generate_recurse(dir, pos, roomsToFill, split)
+	
+	#base case: no more rooms left to make
+	else:
+		return
 
 
 #will take the IdMatrix array and generate the rooms into the world
