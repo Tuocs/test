@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node",
+"class": "TwoDimArray",
+"language": "GDScript",
+"path": "res://Scripts/TwoDimArray.gd"
+} ]
+_global_script_class_icons={
+"TwoDimArray": ""
+}
+
 [application]
 
 config/name="test"
@@ -17,7 +27,6 @@ config/icon="res://Assets/icon.png"
 [autoload]
 
 Globals="*res://Scripts/Globals.gd"
-TwoDimArray="*res://Scripts/TwoDimArray.gd"
 
 [display]
 

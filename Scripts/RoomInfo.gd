@@ -18,7 +18,8 @@ func isCleared():
 func setLoaded(loadState):
 	loaded = loadState
 	if cleared == false:
-		get_node("Enemies").spawnEnemies()
+#		get_node("Enemies").spawnEnemies()
+		pass
 func clearRoom():
 	cleared = true
 

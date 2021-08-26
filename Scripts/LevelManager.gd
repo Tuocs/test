@@ -4,9 +4,9 @@ extends Node2D
 var Start = load ("res://Scenes/Rooms/TestLevel.tscn")
 var Hallway = load ("res://Scenes/Rooms/TestLevel - Copy.tscn")
 
-var width = 11
-var height = 7
-var roomDensity = .35
+var width = 25
+var height = 13
+var roomDensity = .45
 var numRooms = int(width * height * roomDensity)
 
 # ROOM DOOR LAYOUT in LayoutMatrix
@@ -67,7 +67,9 @@ func generate_layout():
 				dir.x = -1
 		
 		generate_recurse(dir, Vector2(int(width / 2), int(height / 2)), \
-		 int(numRooms / 4), false) 
+		int(numRooms / 4), false) 
+	
+	LayoutMatrix.display_as_binary()
 
 
 func generate_recurse(dir, pos, roomsToFill, split):
@@ -75,7 +77,11 @@ func generate_recurse(dir, pos, roomsToFill, split):
 		pos += dir
 		
 		#don't go out of bounds
-		if pos.x > width || pos.x < 0 || pos.y < 0 || pos.y > height:
+		if pos.x >= width || pos.x < 0 || pos.y < 0 || pos.y >= height:
+			return
+		
+		#don't overwrite another room
+		if LayoutMatrix.index(pos.x, pos.y) != 0:
 			return
 		
 		#add a hallway back to the last room
@@ -94,22 +100,52 @@ func generate_recurse(dir, pos, roomsToFill, split):
 		if split:
 			split = false
 			
-			var splitClockwise = randi() % 2
-			var splitCounterclockwise = randi() % 2
+			var splitClockwise = Globals.rng.randi() % 2
+			var splitCounterclockwise = Globals.rng.randi() % 2
 			
 			if splitClockwise:
 				#mult then swap goes clockwise
-				var newDir = dir * Vector2(-1, 1)
-				newDir = Vector2(newDir.y, newDir.x)
+				var splitDir = dir * Vector2(-1, 1)
+				splitDir = Vector2(splitDir.y, splitDir.x)
 				
-				#TODO: decide how many rooms to give splits
+				var splitRooms = roomsToFill / 3
+				splitRooms = clamp(splitRooms, 1, roomsToFill / 3)
+				
+				generate_recurse(splitDir, pos, splitRooms, false)
+				
+				#add a door to this room going into the split
+				if splitDir.y == -1:
+					doorSides |= 0b1000
+				elif splitDir.y == 1:
+					doorSides |= 0b0010
+				elif splitDir.x == -1:
+					doorSides |= 0b0001
+				elif splitDir.x == 1:
+					doorSides |= 0b0100
 			
 			#guarantees at least one split
 			if splitCounterclockwise || !splitCounterclockwise:
-				pass #swap then mult goes counterclockwise
+				#swap then mult goes counterclockwise
+				var splitDir = Vector2(dir.y, dir.x)
+				splitDir *= Vector2(-1, 1)
+				
+				var splitRooms = roomsToFill / 3
+				splitRooms = clamp(splitRooms, 1, roomsToFill / 3)
+				
+				generate_recurse(splitDir, pos, splitRooms, false)
+				
+				#add a door to this room going into the split
+				if splitDir.y == -1:
+					doorSides |= 0b1000
+				elif splitDir.y == 1:
+					doorSides |= 0b0010
+				elif splitDir.x == -1:
+					doorSides |= 0b0001
+				elif splitDir.x == 1:
+					doorSides |= 0b0100
 			
 			pass
-		elif randi() % 2:
+		elif Globals.rng.randi() % 2:
 			split = true
 		
 		#add a hallway going to the next room, if there are more rooms to generate
@@ -124,6 +160,9 @@ func generate_recurse(dir, pos, roomsToFill, split):
 				doorSides |= 0b0001
 			elif dir.x == 1:
 				doorSides |= 0b0100
+		
+		#actually add the room to the matrix
+		LayoutMatrix.assign(pos.x, pos.y, doorSides)
 		
 		#recurse
 		generate_recurse(dir, pos, roomsToFill, split)
