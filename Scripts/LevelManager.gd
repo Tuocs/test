@@ -4,9 +4,9 @@ extends Node2D
 var Start = load ("res://Scenes/Rooms/TestLevel.tscn")
 var Hallway = load ("res://Scenes/Rooms/TestLevel - Copy.tscn")
 
-var width = 15
-var height = 15
-var roomDensity = .2
+var width = 13
+var height = 13
+var roomDensity = .25
 var numRooms = int(width * height * roomDensity)
 
 # ROOM DOOR LAYOUT in LayoutMatrix
@@ -69,7 +69,7 @@ func generate_layout():
 		generate_recurse(dir, Vector2(int(width / 2), int(height / 2)), \
 		int(numRooms / 4), false) 
 	
-	LayoutMatrix.display_as_filled()
+	LayoutMatrix.display_as_binary()
 
 
 func generate_recurse(dir, pos, roomsToFill, split):
@@ -82,6 +82,20 @@ func generate_recurse(dir, pos, roomsToFill, split):
 		
 		#don't overwrite another room
 		if LayoutMatrix.index(pos.x, pos.y) != 0:
+			#add a door in this room going back to the last room
+			var thisRoomDoorSides = LayoutMatrix.index(pos.x, pos.y)
+			
+			if dir.y == 1:
+				thisRoomDoorSides |= 0b1000
+			elif dir.y == -1:
+				thisRoomDoorSides |= 0b0010
+			elif dir.x == 1:
+				thisRoomDoorSides |= 0b0001
+			elif dir.x == -1:
+				thisRoomDoorSides |= 0b0100
+			
+			LayoutMatrix.assign(pos.x, pos.y, thisRoomDoorSides)
+			
 			return
 		
 		#add a hallway back to the last room
