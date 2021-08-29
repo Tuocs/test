@@ -1,0 +1,72 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Scenes/Tilesets/BrickTiles.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Tilesets/GrassTiles.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Tilesets/RockTiles.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Tilesets/MiscTiles.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Tilesets/WoodPlatTiles.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scripts/RoomInfo.gd" type="Script" id=6]
+[ext_resource path="res://Scripts/EnemyManager.gd" type="Script" id=7]
+[ext_resource path="res://Scenes/LevelObjects/LevelLoader.tscn" type="PackedScene" id=8]
+
+[node name="RoomRoot" type="Node2D"]
+script = ExtResource( 6 )
+
+[node name="Background" type="ColorRect" parent="."]
+margin_left = -64.0
+margin_top = -64.0
+margin_right = -42.0
+margin_bottom = -51.0
+rect_scale = Vector2( 64, 64 )
+color = Color( 0.541176, 0.690196, 0.670588, 1 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "In rect/size, set the values to the room's width and length in tiles."
+}
+
+[node name="BottomRender" type="Node2D" parent="."]
+__meta__ = {
+"_editor_description_": "You can add additional tilesets here that render under enemies and the player."
+}
+
+[node name="WoodPlatTiles" parent="BottomRender" instance=ExtResource( 5 )]
+tile_data = PoolIntArray( 327684, 6, 0, 327685, 0, 0, 327686, 0, 0, 327687, 0, 0, 327688, 0, 0, 327689, 0, 0, 327690, 0, 0, 327691, 0, 0, 327692, 1, 0, 393229, 3, 0, 393230, 4, 0, 458765, 3, 0, 458766, 4, 0, 524301, 3, 0, 524302, 4, 0, 589837, 3, 0, 589838, 4, 0, 655373, 3, 0, 655374, 4, 0 )
+
+[node name="MiscTiles" parent="BottomRender" instance=ExtResource( 4 )]
+
+[node name="Enemies" type="Node2D" parent="."]
+script = ExtResource( 7 )
+__meta__ = {
+"_editor_description_": "This node's children should all be instances of scenes from the file res://Scenes/LevelObjects/Enemies."
+}
+
+[node name="TopRender" type="Node2D" parent="."]
+__meta__ = {
+"_editor_description_": "You can add additional tilesets here that render over enemies and the player."
+}
+
+[node name="BrickTiles" parent="TopRender" instance=ExtResource( 1 )]
+tile_data = PoolIntArray( -1, 0, 1, -65536, 0, 196610, -65535, 0, 196610, -65534, 0, 196610, -65533, 0, 196610, -65532, 0, 196610, -65531, 0, 196610, -65530, 0, 196610, -65529, 0, 196610, -65528, 0, 196610, -65527, 0, 196610, -65526, 0, 196610, -65525, 0, 196610, -65524, 0, 196610, -65523, 0, 196610, -65522, 0, 196610, -65521, 0, 196610, -65520, 0, 196610, -65519, 0, 196610, -65518, 0, 196610, -65517, 0, 196610, -65516, 0, 3, 65535, 0, 65536, 20, 0, 65536, 131071, 0, 65536, 65556, 0, 65536, 196607, 0, 65536, 131092, 0, 65536, 262143, 0, 65540, 196608, 0, 10, 196609, 0, 10, 196610, 0, 10, 196611, 0, 11, 196628, 0, 131072, 327679, 0, 65544, 262144, 0, 131081, 262145, 0, 131081, 262146, 0, 131081, 262147, 0, 131083, 262157, 0, 8, 262158, 0, 11, 393215, 0, 131076, 327680, 0, 196617, 327681, 0, 196617, 327682, 0, 196617, 327683, 0, 196619, 327693, 0, 196616, 327694, 0, 196619, 458751, 0, 65536, 393233, 0, 8, 393234, 0, 10, 393235, 0, 10, 393236, 0, 11, 524287, 0, 65536, 458769, 0, 196616, 458770, 0, 131077, 458771, 0, 131081, 458772, 0, 131083, 589823, 0, 65536, 524294, 0, 8, 524295, 0, 10, 524296, 0, 11, 524306, 0, 65544, 524307, 0, 131081, 524308, 0, 131083, 655359, 0, 65536, 589830, 0, 65544, 589831, 0, 131081, 589832, 0, 131083, 589842, 0, 65544, 589843, 0, 131081, 589844, 0, 131083, 720895, 0, 65536, 655366, 0, 65544, 655367, 0, 131081, 655368, 0, 131083, 655378, 0, 65544, 655379, 0, 131081, 655380, 0, 131083, 786431, 0, 131073, 720896, 0, 196610, 720897, 0, 196610, 720898, 0, 196610, 720899, 0, 196610, 720900, 0, 196610, 720901, 0, 196610, 720902, 0, 196613, 720903, 0, 196617, 720904, 0, 196614, 720905, 0, 196610, 720906, 0, 196610, 720907, 0, 196610, 720908, 0, 196610, 720909, 0, 196610, 720910, 0, 196610, 720911, 0, 196610, 720912, 0, 196610, 720913, 0, 196610, 720914, 0, 196613, 720915, 0, 196617, 720916, 0, 196619 )
+
+[node name="GrassTiles" parent="TopRender" instance=ExtResource( 2 )]
+
+[node name="RockTiles" parent="TopRender" instance=ExtResource( 3 )]
+
+[node name="Doors" type="Node2D" parent="."]
+__meta__ = {
+"_editor_description_": "This node's children should all be instances of the LevelLoader scene."
+}
+
+[node name="LevelLoader" parent="Doors" instance=ExtResource( 8 )]
+position = Vector2( 640, -32 )
+rotation = 1.5708
+
+[node name="LevelLoader2" parent="Doors" instance=ExtResource( 8 )]
+position = Vector2( 1312, 320 )
+
+[node name="LevelLoader3" parent="Doors" instance=ExtResource( 8 )]
+position = Vector2( 640, 736 )
+rotation = 1.5708
+
+[node name="LevelLoader4" parent="Doors" instance=ExtResource( 8 )]
+position = Vector2( -32, 320 )
